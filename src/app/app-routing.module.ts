@@ -5,18 +5,17 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsComponent } from './products/products.component';
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
-import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
+  {
+    path: 'dashboard',
+    component: LoginComponent,
+    canActivate: [LoginService] 
+  },
   {
     path: 'login',
     pathMatch: 'full',
     component: LoginComponent
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
   },
   {
     path: 'page-not-found',
@@ -32,10 +31,9 @@ const routes: Routes = [
     component: SalesOrdersComponent, 
     canActivate: [LoginService] 
   },
-  { 
-    path: 'users', 
-    component: UsersComponent, 
-    canActivate: [LoginService] 
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
   },
   { 
     path: '**', 

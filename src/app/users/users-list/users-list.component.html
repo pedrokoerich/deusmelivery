@@ -1,0 +1,17 @@
+<po-page-default p-title="Usuários" [p-actions]="actions"> 
+    <po-table [p-actions]="actionsTab"
+    p-container="border"
+    [p-height]="400"
+    [p-hide-batch-actions]="true"
+    [p-hide-table-search]="false"
+    [p-selectable]="true"
+    (p-show-more)="this.getUsers(true)"
+    [p-show-more-disabled]="disableNext"
+    [p-sort]="true"
+    [p-striped]="true"
+    [p-columns]="fields"
+    [p-items]="items || []"
+    [p-max-columns]="12"
+    >
+    </po-table>
+</po-page-default>
