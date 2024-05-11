@@ -7,6 +7,7 @@ import { UsersEditComponent } from './users-edit/users-edit.component';
 import {  PoModule } from '@po-ui/ng-components';
 import { PoPageDynamicEditModule} from '@po-ui/ng-templates';
 import { UsersRoutingModule } from './users-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UsersRoutingModule } from './users-routing.module';
     PoPageDynamicEditModule,
     PoModule,
     UsersRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class UsersModule { }

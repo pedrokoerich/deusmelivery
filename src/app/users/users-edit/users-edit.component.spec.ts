@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersEditComponent } from './users-edit.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('UsersEditComponent', () => {
   let component: UsersEditComponent;
@@ -21,3 +22,7 @@ describe('UsersEditComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+function expect(component: UsersEditComponent) {
+  throw new Error('Function not implemented.');
+}
+

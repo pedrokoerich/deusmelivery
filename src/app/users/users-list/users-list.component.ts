@@ -32,18 +32,18 @@ export class UsersListComponent {
     {
       //action: (this.viewMedicao.bind(this)),
       icon: 'po-icon po-icon-eye',
-      label: 'Visualizar Medição',
+      label: 'Visualizar',
     },
     {
       //action: this.editMedicao.bind(this),
       icon: 'po-icon po-icon-edit',
-      label: 'Alterar Medição',
+      label: 'Alterar',
       //disabled: this.disabledCancelMedicao.bind(this)
     },
     {
       //action: this.deleteMedicao.bind(this),
       icon: 'po-icon po-icon-delete',
-      label: 'Excluir Medição',
+      label: 'Excluir',
       //disabled: this.disabledCancelMedicao.bind(this)
     }
   ];
@@ -91,8 +91,10 @@ export class UsersListComponent {
           this.items.push(...data.items);
         } else {
           this.items = data.items;
+          console.log("entrou aqui")
         }
         this.disableNext = !data.hasNext;
+        console.log(this.items)
       }),
       finalize(() => this.loading = false)
     ).subscribe();

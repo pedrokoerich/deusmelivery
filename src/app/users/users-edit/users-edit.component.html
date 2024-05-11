@@ -1,10 +1,25 @@
-<po-page-dynamic-edit
-  [p-auto-router]="true"
-  p-title="User edit"
-  [p-actions]="actions"
-  [p-breadcrumb]="breadcrumb"
-  [p-fields]="fields"
-  [p-literals]="literals"
-  [p-service-api]="serviceApi"
->
-</po-page-dynamic-edit>
+
+<po-page-edit #pageEdit [p-title]="title" (p-cancel)="cancel()" (p-save)="saveUser()" [p-literals]="literals"
+[p-disable-submit]="!this.reactiveForm.valid || (VISUALIZAR )">
+  <form [formGroup]="reactiveForm" style="margin: auto;">
+    <!-- <div class="po-row">
+        <po-input
+          p-label="Código do Usuário"
+          p-property="id"
+          formControlName="id"
+          name="id"
+        ></po-input>
+    </div> -->
+    <div class="po-row">
+        <po-input
+          p-label="Name"
+          p-property="name"
+          formControlName="name"
+          name="name"
+          [p-placeholder]="'Enter the user name'"
+        ></po-input>
+    </div>
+  </form>
+</po-page-edit>
+
+

@@ -1,5 +1,5 @@
 <div class="po-wrapper" >
-  <po-toolbar p-title="Dev"></po-toolbar>
+  <po-toolbar [p-title]="title"></po-toolbar>
 
   <po-menu 
     [p-filter]="true"
@@ -14,9 +14,9 @@
     </p>
   </div>
   <router-outlet></router-outlet>
-  <po-toolbar p-title="PO - Human Resources" [p-show-notification]="false"></po-toolbar>
+  <po-toolbar p-title="DeusMelivery" [p-show-notification]="false"></po-toolbar>
 </div>
 
-<!-- <ng-container *ngIf="!this.loginService.autenticado">
+<ng-container *ngIf="!this.loginService.autenticado">
   <app-login></app-login>
-</ng-container> -->
+</ng-container>

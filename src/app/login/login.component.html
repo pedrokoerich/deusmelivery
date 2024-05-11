@@ -1,3 +1,18 @@
-<po-page-login (p-login-submit)="loginSubmit($event)">
-
-</po-page-login>
+  <po-page-login
+    *ngIf="!showPageBlocked"
+    p-logo=""
+    p-background=""
+    p-product-name="DeusMelivery"
+    p-register-url="http://po.com"
+    p-secondary-logo=""
+    [p-literals]="literalsI18n"
+    [p-loading]="loading"
+    [p-password-errors]="passwordErrors"
+    [p-login-errors]="loginErrors"
+    [p-recovery]="passwordRecovery"
+    (p-login-change)="loginChange()"
+    (p-login-submit)="loginSubmit($event)"
+    (p-password-change)="passwordChange()"
+  >
+  
+  </po-page-login>
