@@ -9,18 +9,21 @@ import { environment } from 'src/environments/environment';
 export class UsersService {
   public readonly headers = { 
     'X-PO-No-Count-Pending-Requests': 'false', 
-    'X-PO-Screen-Lock': 'true'
+    'X-PO-Screen-Lock': 'true',
+    'X-PO-Ignore-Loading': 'false',
+    'X-PO-Request-Intercept': 'true',
   };
   public readonly serviceApi = 'api/v1/users';
   public readonly baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {
-    console.log('Base URL:', this.baseUrl);
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
-  public get(filters: any): Observable<any> {
+  public get(): Observable<any> {
     const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.get(url, { headers: this.headers, params: filters });
+    return this.http.get(url, { headers: this.headers });
   }
 
   public getUserById(id: string): Observable<any> {
@@ -28,7 +31,7 @@ export class UsersService {
     return this.http.get(url);
   }
 
-  public saveUser(user: any): Observable<any> {
+  public saveUser(user: any){
     const url = user.id ? `${this.baseUrl}${this.serviceApi}/${user.id}` : `${this.baseUrl}${this.serviceApi}`;
     console.log(user)
     if (user.id) {

@@ -84,13 +84,13 @@ export class UsersListComponent {
 
     this.loading = true;
   
-    this.usersService.get(filters).pipe(
+    this.usersService.get().pipe(
       take(1),
       tap((data: any) => {
         if (lShowMore) {
-          this.items.push(...data.items);
+          this.items.push(...data);
         } else {
-          this.items = data.items;
+          this.items = data;
           console.log("entrou aqui")
         }
         this.disableNext = !data.hasNext;
