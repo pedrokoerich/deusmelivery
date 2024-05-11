@@ -76,16 +76,20 @@ export class UsersEditComponent implements OnInit {
   }
 
   public saveUser(): void{
-    this.usersService.saveUser(this.reactiveForm.value).pipe(
-      tap((response: any) => {
-        console.log('Usuário salvo com sucesso:', response);
-        // Implemente a navegação conforme necessário
-      }),
-      catchError((error: any) => {
-        console.error('Erro ao salvar o usuário:', error);
-        throw error;
-      })
-    ).subscribe();
+    this.usersService.saveUser(this.reactiveForm.value).subscribe(
+      (response) => {
+        console.log('Response status:', response.status); // Aqui você pode acessar o código de status HTTP
+        // Trate a resposta de acordo com o código de status HTTP
+        if (response.status === 200) {
+          console.log('Usuário criado com sucesso!');
+        } else {
+          console.log('Erro ao criar usuário. Código de status:', response.status);
+        }
+      },
+      (error) => {
+        console.error('Erro ao chamar o serviço createUser:', error);
+      }
+    );
   }
 
   public cancel() {

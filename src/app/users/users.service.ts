@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -31,14 +31,10 @@ export class UsersService {
     return this.http.get(url);
   }
 
-  public saveUser(user: any){
-    const url = user.id ? `${this.baseUrl}${this.serviceApi}/${user.id}` : `${this.baseUrl}${this.serviceApi}`;
-    console.log(user)
-    if (user.id) {
-      return this.http.put(url, user);
-    } else {
-      return this.http.post(url, user);
-    }
+
+  public saveUser(user: any): Observable<HttpResponse<any>> { // Define o tipo de retorno como HttpResponse<any>
+    const url = `${this.baseUrl}${this.serviceApi}`;
+    return this.http.post(url, user, { observe: 'response' }); // Adiciona { observe: 'response' } para obter a resposta completa, incluindo o cabeçalho HTTP
   }
   
 
