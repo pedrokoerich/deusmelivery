@@ -32,20 +32,72 @@ export class UsersService {
   }
 
 
-  public saveUser(user: any): Observable<HttpResponse<any>> { // Define o tipo de retorno como HttpResponse<any>
-    const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.post(url, user, { observe: 'response' }); // Adiciona { observe: 'response' } para obter a resposta completa, incluindo o cabeçalho HTTP
+  public saveUser(user: any): Observable<HttpResponse<any>> { 
+
+    if (user.id) {
+      const url = `${this.baseUrl}${this.serviceApi}/${user.id}`;
+      return this.http.put(url, user, { observe: 'response' });
+    } else {
+      const url = `${this.baseUrl}${this.serviceApi}`;
+      return this.http.post(url, user, { observe: 'response' });
+    }
+
+  }
+
+  
+  public deleteUser(id: string): Observable<HttpResponse<any>> {
+    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
+    return this.http.delete(url, { observe: 'response' });
   }
   
 
-  public updateUser(user: any): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}/${user.id}`;
-    return this.http.put(url, user);
+
+  getCity(state: string) {
+    switch (state) {
+      case 'SC': {
+        return [
+          { city: 'Palhoça', code: 5 },
+          { city: 'Lages', code: 6 },
+          { city: 'Balneário Camboriú', code: 7 },
+          { city: 'Brusque', code: 8 }
+        ];
+      }
+      case 'SP': {
+        return [
+          { city: 'São Paulo', code: 9 },
+          { city: 'Guarulhos', code: 10 },
+          { city: 'Campinas', code: 11 },
+          { city: 'São Bernardo do Campo', code: 12 }
+        ];
+      }
+      case 'RJ': {
+        return [
+          { city: 'Rio de Janeiro', code: 13 },
+          { city: 'São Gonçalo', code: 14 },
+          { city: 'Duque de Caxias', code: 15 },
+          { city: 'Nova Iguaçu', code: 16 }
+        ];
+      }
+      case 'MG': {
+        return [
+          { city: 'Belo Horizonte', code: 17 },
+          { city: 'Uberlândia', code: 18 },
+          { city: 'Contagem', code: 19 },
+          { city: 'Juiz de Fora', code: 20 }
+        ];
+      }
+    }
+    return [];
   }
-  
-  public deleteUser(id: string): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.delete(url);
+
+  getUserDocument(value) {
+    const cpfField = { property: 'cpf', visible: true };
+    const cnpjField = { property: 'cnpj', visible: true };
+    const document = value.isJuridicPerson ? cnpjField : cpfField;
+
+    return {
+      fields: [document]
+    };
   }
-  
+
 }

@@ -1,25 +1,59 @@
 
-<po-page-edit #pageEdit [p-title]="title" (p-cancel)="cancel()" (p-save)="saveUser()" [p-literals]="literals"
-[p-disable-submit]="!this.reactiveForm.valid || (VISUALIZAR )">
-  <form [formGroup]="reactiveForm" style="margin: auto;">
-    <!-- <div class="po-row">
-        <po-input
-          p-label="Código do Usuário"
-          p-property="id"
-          formControlName="id"
-          name="id"
-        ></po-input>
-    </div> -->
+<po-page-edit #pageEdit [p-title]="title">
+<!--   <form [formGroup]="reactiveForm" style="margin: auto;">
     <div class="po-row">
         <po-input
           p-label="Name"
           p-property="name"
           formControlName="name"
           name="name"
-          [p-placeholder]="'Enter the user name'"
+          class="po-md-3 po-lg-3 po-xl-4"
         ></po-input>
+        <po-input
+          p-label="Sobrenome"
+          p-property="surname"
+          formControlName="surname"
+          name="surname"
+          class="po-md-3 po-lg-3 po-xl-4"
+        ></po-input>
+        <po-input
+          p-label="E-mail"
+          p-property="email"
+          formControlName="email"
+          name="email"
+          class="po-md-3 po-lg-3 po-xl-4"
+      ></po-input>
     </div>
-  </form>
+    <div class="po-row">
+
+    </div>
+    <div class="po-row">
+
+    </div>
+  </form> -->
+
+  <po-dynamic-form
+  #dynamicForm
+  p-auto-focus="name"
+  [p-fields]="fields"
+  [p-load]="onLoadFields.bind(this)"
+  [p-validate]="this.onChangeFields.bind(this)"
+  [p-validate-fields]="validateFields"
+  [p-value]="person"
+>
+</po-dynamic-form>
+
+<br />
+
+<div class="po-row">
+  <po-button
+    class="po-md-3"
+    p-label="Save"
+    [p-disabled]="dynamicForm?.form.invalid || VISUALIZAR "
+    (p-click)="this.saveUser()"
+  >
+  </po-button>
+</div>
 </po-page-edit>
 
 
