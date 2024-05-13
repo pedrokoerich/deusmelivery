@@ -1,52 +1,46 @@
+import { ProductsService } from './../products.service';
 import { Component, ViewChild } from '@angular/core';
 import { PoModalComponent, PoNotificationService, PoPageAction, PoTableAction, PoTableColumn } from '@po-ui/ng-components';
-import { UsersService } from '../users.service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, take, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrl: './users-list.component.css'
+  selector: 'app-products-list',
+  templateUrl: './products-list.component.html',
+  styleUrl: './products-list.component.css'
 })
-export class UsersListComponent {
+export class ProductsListComponent {
   @ViewChild('modalConfirm', { static: true }) modalConfirm: PoModalComponent | undefined;
-  
+
   fields: Array<PoTableColumn> = [
-    {
-      property: 'status', width: '8%', label: 'Status', type: 'subtitle', subtitles: [
-        { value: 'Ativo', color: 'color-11', label: 'Ativo', content: '' },
-        { value: 'Inativo', color: 'color-07', label: 'Inativo', content: '' },
-      ]
-    },
-    { property: 'name', label: 'Nome', type: 'string', width: '25%' },
-    { property: 'email', label: 'E-mail', type: 'string', width: '25%' },
-    { property: 'phone', label: 'Celular', type: 'string', format: '(99) 99999-9999', width: '10%' },
-    { property: 'birthday', label: 'Nascimento', type: 'string', width: '10%'},
-    { property: 'genre', label: 'Gênero', type: 'string', width: '10%' },
+    { property: 'name', label: 'Produto', type: 'string', width: '25%' },
+    { property: 'category', label: 'Categoria', type: 'string', width: '25%' },
+    { property: 'fornec', label: 'Fornecedor', type: 'string', width: '10%' },
+    { property: 'quantity', label: 'Quantidade', type: 'number', width: '10%' },
+    { property: 'value', label: 'Valor', type: 'number', width: '10%'},
+
+  ];
+  
+  public readonly actions: Array<PoPageAction> = [
+    { label: 'Novo', icon: 'po-icon-plus', action: () => this.router.navigate(['/products/new']) },
+    { label: 'Atualizar', icon: 'po-icon-refresh', action: () => this.getProducts() }
   ];
 
-  public readonly actions: Array<PoPageAction> = [
-    { label: 'Novo', icon: 'po-icon-plus', action: () => this.router.navigate(['/users/new']) },
-    { label: 'Atualizar', icon: 'po-icon-refresh', action: () => this.getUsers() }
-  ];
-  
-  public actionsTab: Array<PoTableAction> = 
-  [
+  public actionsTab: Array<PoTableAction> = [
     {
-      action: this.viewUser.bind(this),
+      action: this.viewProduct.bind(this),
       icon: 'po-icon po-icon-eye',
       label: 'Visualizar',
     },
     {
-      action: this.editUser.bind(this),
+      action: this.editProduct.bind(this),
       icon: 'po-icon po-icon-edit',
       label: 'Alterar',
       //disabled: this.disabledCancelMedicao.bind(this)
     },
     {
-      action: this.deleteUser.bind(this),
+      action: this.deleteProduct.bind(this),
       icon: 'po-icon po-icon-delete',
       label: 'Excluir',
       //disabled: this.disabledCancelMedicao.bind(this)
@@ -60,23 +54,21 @@ export class UsersListComponent {
   public disableNext: boolean = false;
   public reactiveForm: any = this.createReactiveForm();
   public modalMessage: string = '';
-  public userIdToDelete: string = '';
+  public productIdToDelete: string = '';
 
   constructor(
-    private usersService: UsersService,
+    private productsService: ProductsService,
     private poNotification: PoNotificationService,
     public fb: FormBuilder,
     private router: Router
 
   ) { }
 
-
   ngOnInit() {
-    this.getUsers();
+    this.getProducts();
   }
 
-
-  getUsers(lShowMore = false) {
+  getProducts(lShowMore = false) {
     if (lShowMore) {
       this.page++;
     } else {
@@ -89,7 +81,7 @@ export class UsersListComponent {
 
     this.loading = true;
   
-    this.usersService.get().pipe(
+    this.productsService.get().pipe(
       take(1),
       tap((data: any) => {
         if (lShowMore) {
@@ -109,26 +101,26 @@ export class UsersListComponent {
     const formGroupConfig = {
       id: [''],
       name: [''],
-      email: [''],
-      phone: [''],
-      birthday: [''],
-      genre: ['']
+      category: [''],
+      quantity: [''],
+      value: [''],
+      fornec: ['']
     };
     const formGroup = this.fb.group(formGroupConfig);
     return formGroup;
   }
 
 
-  viewUser(item) {
-    this.router.navigate(['/users/view/' + item.id])
+  viewProduct(item) {
+    this.router.navigate(['/products/view/' + item.id])
   }
 
-  editUser(item) {
-    this.router.navigate(['/users/edit/' + item.id])
+  editProduct(item) {
+    this.router.navigate(['/products/edit/' + item.id])
   }
 
-  deleteUser(item) {
-    this.userIdToDelete = item.id;
+  deleteProduct(item) {
+    this.productIdToDelete = item.id;
 
     this.modalConfirm.title = 'Exclusão de Usuário'
     this.modalMessage = 'Deseja realmente excluir o usuário ' + item.name + '?'
@@ -136,20 +128,20 @@ export class UsersListComponent {
   }
 
   confirmDelete() {
-    if (this.userIdToDelete) {
+    if (this.productIdToDelete) {
       this.modalConfirm.close();
   
-      this.usersService.deleteUser(this.userIdToDelete).subscribe(
+      this.productsService.deleteProduct(this.productIdToDelete).subscribe(
         (response) => {
           console.log(response);
           if (response.status === 200) {
-            this.poNotification.success('Usuário excluído com sucesso!');
+            this.poNotification.success('Produto excluído com sucesso!');
           } else {
-            this.poNotification.error('Erro ao excluir usuário. Código de status:' + response.status);
+            this.poNotification.error('Erro ao excluir o produto. Código de status:' + response.status);
           }
         },
         (error) => {
-          this.poNotification.error('Erro ao chamar o serviço deleteUser:' + error);
+          this.poNotification.error('Erro ao chamar o serviço deleteProduct:' + error);
         }
       );
     }

@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   public autenticado = false;
+  public readonly serviceApi = 'api/v1/login';
+  public readonly baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient, 
@@ -15,16 +18,20 @@ export class LoginService {
   ) { }
 
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`/api/oauth2/v1/token`,
-      {},
-      {
-        params: {
-          grant_type: 'password',
-          password: password,
-          username: username
-        }
-      })
+  login(form: any): Observable<any> {
+    const url = `${this.baseUrl}${this.serviceApi}`;
+    return this.http.get(url, form);
+  }
+
+  canActivate(
+    route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
+
+    if (this.autenticado) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 
 }

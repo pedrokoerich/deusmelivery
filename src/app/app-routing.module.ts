@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsComponent } from './products/products.component';
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: LoginComponent,
-    canActivate: [LoginService] 
+    component: DashboardComponent,
+    /* canActivate: [LoginService]  */
   },
   {
     path: 'login',
@@ -28,13 +29,13 @@ const routes: Routes = [
   },
   { 
     path: 'products', 
-    component: ProductsComponent, 
-    canActivate: [LoginService] 
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
+    /* canActivate: [LoginService]  */
   },
   { 
     path: 'sales-orders', 
     component: SalesOrdersComponent, 
-    canActivate: [LoginService] 
+   /*  canActivate: [LoginService] , */
   },
   {
     path: 'users',

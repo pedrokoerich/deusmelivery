@@ -1,11 +1,11 @@
 <div class="container">
   <po-container class="po-xl-4">
     <h2>DeusMelivery</h2>
-
-    <po-login class="po-lg-12" name="login"></po-login>
-    <po-password class="po-lg-12" name="password"></po-password>
-
-    <po-button class="po-lg-12" p-label="Login" p-kind="primary"></po-button>
+    <form [formGroup]="formLogin">
+      <po-login #login class="po-lg-12" name="login" formControlName="login"></po-login>
+      <po-password #pass class="po-lg-12" name="password" formControlName="password"></po-password>
+    </form>
+    <po-button class="po-lg-12" p-label="Login" p-kind="primary" (p-click)="this.loginSubmit()"></po-button>
     <br>
     <!-- Texto clicável para abrir modais -->
     <span class="custom-link" data-toggle="modal" data-target="#forgotPasswordModal" (click)="passwordRecoveryModal.open()">Esqueceu sua senha?</span>

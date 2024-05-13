@@ -15,16 +15,19 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UsersEditComponent } from './users/users-edit/users-edit.component';
 import { FormUsersComponent } from './shared/form-users/form-users.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
-        ProductsComponent,
+        SalesOrdersComponent,
         PageNotFoundComponent,
         UsersEditComponent,
-        FormUsersComponent
+        FormUsersComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,

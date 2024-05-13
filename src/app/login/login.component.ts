@@ -7,10 +7,12 @@ import {
   PoPageLoginCustomField,
   PoPageLoginLiterals,
   PoPageLoginRecovery,
-  PoPageLogin
+  PoPageLogin,
+  PoModalPasswordRecoveryComponent
 } from '@po-ui/ng-templates';
 import { Subscription, lastValueFrom } from 'rxjs';
 import { PoModalComponent } from '@po-ui/ng-components';
+import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -18,89 +20,50 @@ import { PoModalComponent } from '@po-ui/ng-components';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  @ViewChild('modalNewUser', { static: true }) modalNewUser: PoModalComponent | undefined;
-  attempts = 3;
-  loading: boolean = false;
-  literalsI18n: PoPageLoginLiterals;
-  loginErrors = [];
-  passwordErrors = [];
-  params: PoPageBlockedUserReasonParams = { attempts: 3, hours: 24 };
-  passwordRecovery: PoPageLoginRecovery = {
-    url: 'https://po-sample-api.onrender.com/v1/users',
-    type: PoModalPasswordRecoveryType.All,
-    contactMail: 'support@mail.com'
-  };
-  showPageBlocked: boolean = false;
-
+  @ViewChild('passwordRecoveryModal', { static: true }) passwordRecoveryModal: PoModalPasswordRecoveryComponent;
+  @ViewChild('modalNewUser', { static: true }) modalNewUser: PoModalComponent;
   
+  public formLogin: FormGroup = this.createFormLogin();
+
   constructor(
-    public router: Router,
-    public loginService: LoginService) {
+    private fb: FormBuilder,
+    private LoginService: LoginService,
+    private router: Router
+  ) { }
 
-    // // Caso já estiver logado não precisa enrtar na tela
-    // if (this.loginService.isLogged()) {
-    //   if (this.globals.menus.length > 0 && this.globals.menus[0].link) {
-    //     this.router.navigate([this.globals.menus[0].link]);
-    //   } else {
-    //     this.globals.logout()
-    //   }
-    // }
+  ngonInit() {
+    
+  }
+  loginSubmit() {
+/*     this.LoginService.login(this.formLogin.value).subscribe(
+      (response) => { */
+        this.LoginService.autenticado = true;
+        this.router.navigate(['/users']);
+/*       },
+      (error) => {
+        console.error('Erro ao efetuar login', error);
+      }
+    ); */
   }
 
-  public async loginSubmit(formData: PoPageLogin) {
-    const service$ = this.loginService.login(formData.login, formData.password)
-    const value = await lastValueFrom(service$);
-    this.router.navigate(['/users']);  
+  // Função para abrir o modal de recuperação de senha
+  openPasswordRecoveryModal() {
+    this.passwordRecoveryModal.open();
   }
 
-  checkLogin(formData) {
-    this.loading = true;
-
-    /* if (formData.login === 'devpo' && formData.password === '1986') {
-      this.passwordErrors = [];
-      this.exceededAttempts = 0;
-      this.loginErrors = [];
-
-      setTimeout(() => {
-        this.poDialog.alert({
-          ok: () => (this.loading = false),
-          title: 'Access released',
-          message: 'You are on vacation, take time to rest.'
-        });
-      }, 3000);
-    } else {
-      this.loading = false;
-      this.generateAttempts();
-      this.passwordErrors = ['Senha e/ou usuário inválido, verifique e tente novamente.'];
-      this.loginErrors = ['Senha e/ou usuário inválido, verifique e tente novamente.'];
-    } */
+  // Função para abrir o modal de registro de novo usuário
+  openNewUserModal() {
+    this.modalNewUser.open();
   }
 
-  passwordChange() {
-    if (this.passwordErrors.length) {
-      this.passwordErrors = [];
-    }
+  createFormLogin() {
+    const formGroupConfig = {
+      login: ['', Validators.required],
+      password: ['', Validators.required]
+    };
+  
+    const formGroup = this.fb.group(formGroupConfig);
+    return formGroup;
   }
-
-  loginChange() {
-    if (this.loginErrors.length) {
-      this.loginErrors = [];
-    }
-  }
-
-  private generateAttempts() {
-    if (this.attempts >= 1) {
-      this.attempts--;
-      //this.exceededAttempts = this.attempts;
-    }
-    if (this.attempts === 0) {
-      this.showPageBlocked = true;
-    }
-  }
-
-
-  // public defineLogin(token) {
-  //   localStorage.setItem('ERPTOKEN', token);
-
-  // }
 }
+
