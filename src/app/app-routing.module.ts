@@ -8,6 +8,11 @@ import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: LoginComponent,
+    canActivate: [LoginService] 
+  },
+  {
     path: 'dashboard',
     component: LoginComponent,
     canActivate: [LoginService] 
@@ -34,7 +39,7 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
-    /* canActivate: [LoginService]  */
+    /* canActivate: [LoginService] */ 
   },
   { 
     path: '**', 

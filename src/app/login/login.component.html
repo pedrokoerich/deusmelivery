@@ -1,18 +1,25 @@
-  <po-page-login
-    *ngIf="!showPageBlocked"
-    p-logo=""
-    p-background=""
-    p-product-name="DeusMelivery"
-    p-register-url="http://po.com"
-    p-secondary-logo=""
-    [p-literals]="literalsI18n"
-    [p-loading]="loading"
-    [p-password-errors]="passwordErrors"
-    [p-login-errors]="loginErrors"
-    [p-recovery]="passwordRecovery"
-    (p-login-change)="loginChange()"
-    (p-login-submit)="loginSubmit($event)"
-    (p-password-change)="passwordChange()"
-  >
-  
-  </po-page-login>
+<div class="container">
+  <po-container class="po-xl-4">
+    <h2>DeusMelivery</h2>
+
+    <po-login class="po-lg-12" name="login"></po-login>
+    <po-password class="po-lg-12" name="password"></po-password>
+
+    <po-button class="po-lg-12" p-label="Login" p-kind="primary"></po-button>
+    <br>
+    <!-- Texto clicável para abrir modais -->
+    <span class="custom-link" data-toggle="modal" data-target="#forgotPasswordModal" (click)="passwordRecoveryModal.open()">Esqueceu sua senha?</span>
+    <br>
+    <span class="custom-link" data-toggle="modal" data-target="#registerModal" (click)="modalNewUser.open()">Novo Registro</span>
+  </po-container>
+</div>
+
+<po-modal-password-recovery #passwordRecoveryModal></po-modal-password-recovery>
+
+<po-modal #modalNewUser p-click-out="true" p-size="md" p-title="Cadastro de Usuário">
+  <ng-container>
+    <app-form-users></app-form-users>
+  </ng-container>
+</po-modal>
+
+

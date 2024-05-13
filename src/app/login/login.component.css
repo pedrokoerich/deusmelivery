@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .custom-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #032c57;
+    margin: 5px 0;
+    display: block; /* Para que o span ocupe toda a largura e permita o alinhamento central */
+    text-align: center; /* Alinhar o texto ao centro */
+  }
+  
+  .custom-link:hover {
+    text-decoration: none; /* Remover sublinhado ao passar o mouse */
+  }
+  

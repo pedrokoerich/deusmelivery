@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UsersEditComponent } from './users/users-edit/users-edit.component';
+import { FormUsersComponent } from './shared/form-users/form-users.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
         HomeComponent,
         LoginComponent,
         ProductsComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        UsersEditComponent,
+        FormUsersComponent
     ],
     imports: [
         BrowserModule,

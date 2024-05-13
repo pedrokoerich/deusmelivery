@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import {
@@ -10,6 +10,7 @@ import {
   PoPageLogin
 } from '@po-ui/ng-templates';
 import { Subscription, lastValueFrom } from 'rxjs';
+import { PoModalComponent } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { Subscription, lastValueFrom } from 'rxjs';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  @ViewChild('modalNewUser', { static: true }) modalNewUser: PoModalComponent | undefined;
   attempts = 3;
   loading: boolean = false;
   literalsI18n: PoPageLoginLiterals;

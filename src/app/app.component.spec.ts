@@ -2,6 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { PoMenuModule, PoPageModule, PoToolbarModule } from '@po-ui/ng-components';
 
 import { AppComponent } from './app.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -25,3 +26,7 @@ describe('AppComponent', () => {
   });
 
 });
+
+function expect(app: any) {
+  throw new Error('Function not implemented.');
+}
