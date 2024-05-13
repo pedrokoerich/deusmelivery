@@ -37,7 +37,6 @@ export class FormUsersComponent {
       format: 'mm/dd/yyyy',
       gridColumns: 6,
       gridSmColumns: 12,
-      order: -1
     },
     { property: 'cpf', label: 'CPF', mask: '999.999.999-99', gridColumns: 6, gridSmColumns: 12, visible: false },
     { property: 'cnpj', label: 'CNPJ', mask: '99.999.999/9999-99', gridColumns: 6, gridSmColumns: 12, visible: false },
@@ -111,6 +110,9 @@ export class FormUsersComponent {
     } else {
       this.VISUALIZAR = false;
       this.title = 'Inclusão de Usuário';
+      this.person = {
+        status: 'Ativo'
+      }
     }
 
     this.userId = this.routeActive.snapshot.paramMap.get('id');

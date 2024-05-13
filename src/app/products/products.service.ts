@@ -47,4 +47,9 @@ export class ProductsService {
     return this.http.delete(url, { observe: 'response' });
   }
 
+  getProductById(id: string): Observable<any> {
+    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
+    return this.http.get(url, { headers: this.headers });
+  }
+
 }

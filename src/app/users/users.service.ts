@@ -56,34 +56,34 @@ export class UsersService {
     switch (state) {
       case 'SC': {
         return [
-          { city: 'Palhoça', code: 5 },
-          { city: 'Lages', code: 6 },
-          { city: 'Balneário Camboriú', code: 7 },
-          { city: 'Brusque', code: 8 }
+          { city: 'Palhoça', code: 'Palhoça' },
+          { city: 'Lages', code: 'Lages' },
+          { city: 'Balneário Camboriú', code: 'Balneário Camboriú' },
+          { city: 'Brusque', code: 'Brusque' }
         ];
       }
       case 'SP': {
         return [
-          { city: 'São Paulo', code: 9 },
-          { city: 'Guarulhos', code: 10 },
-          { city: 'Campinas', code: 11 },
-          { city: 'São Bernardo do Campo', code: 12 }
+          { city: 'São Paulo', code: 'São Paulo' },
+          { city: 'Guarulhos', code: 'Guarulhos' },
+          { city: 'Campinas', code: 'Campinas' },
+          { city: 'São Bernardo do Campo', code: 'São Bernardo do Campo' }
         ];
       }
       case 'RJ': {
         return [
-          { city: 'Rio de Janeiro', code: 13 },
-          { city: 'São Gonçalo', code: 14 },
-          { city: 'Duque de Caxias', code: 15 },
-          { city: 'Nova Iguaçu', code: 16 }
+          { city: 'Rio de Janeiro', code: 'Rio de Janeiro' },
+          { city: 'São Gonçalo', code: 'São Gonçalo' },
+          { city: 'Duque de Caxias', code: 'Duque de Caxias' },
+          { city: 'Nova Iguaçu', code: 'Nova Iguaçu' }
         ];
       }
       case 'MG': {
         return [
-          { city: 'Belo Horizonte', code: 17 },
-          { city: 'Uberlândia', code: 18 },
-          { city: 'Contagem', code: 19 },
-          { city: 'Juiz de Fora', code: 20 }
+          { city: 'Belo Horizonte', code: 'Belo Horizonte' },
+          { city: 'Uberlândia', code: 'Uberlândia' },
+          { city: 'Contagem', code: 'Contagem' },
+          { city: 'Juiz de Fora', code: 'Juiz de Fora' }
         ];
       }
     }
