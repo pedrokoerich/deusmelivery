@@ -34,7 +34,7 @@ export class FormUsersComponent {
       property: 'birthday',
       label: 'Data de Nascimento',
       type: 'date',
-      format: 'mm/dd/yyyy',
+      format: 'dd/MM/yyyy',
       gridColumns: 6,
       gridSmColumns: 12,
     },

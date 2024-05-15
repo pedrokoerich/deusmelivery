@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductsComponent } from './products/products.component';
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserPasswordChangeComponent } from './user-password-change/user-password-change.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,16 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
     /* canActivate: [LoginService] */ 
+  },
+  {
+    path: 'suppliers',
+    loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersModule),
+    /* canActivate: [LoginService] */ 
+  },
+  {
+    path: 'user-password-change',
+    component: UserPasswordChangeComponent,
+    canActivate: [LoginService]
   },
   { 
     path: '**', 

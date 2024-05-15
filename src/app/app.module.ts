@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
 import { PoButtonModule, PoContainerModule, PoFieldModule, PoLoadingModule, PoModule, PoPageModule, PoTableModule, PoWidgetModule } from '@po-ui/ng-components';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PoTemplatesModule } from '@po-ui/ng-templates';
+import { PoPageChangePasswordModule, PoTemplatesModule } from '@po-ui/ng-templates';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -17,6 +17,7 @@ import { UsersEditComponent } from './users/users-edit/users-edit.component';
 import { FormUsersComponent } from './shared/form-users/form-users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
+import { UserPasswordChangeComponent } from './user-password-change/user-password-change.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
         UsersEditComponent,
         FormUsersComponent,
         DashboardComponent,
+        UserPasswordChangeComponent,
     ],
     imports: [
         BrowserModule,
@@ -42,7 +44,8 @@ import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
         PoButtonModule,
         PoWidgetModule,
         PoContainerModule,
-        HttpClientModule
+        HttpClientModule,
+        PoPageChangePasswordModule 
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt' },

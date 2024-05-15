@@ -13,7 +13,7 @@ export class ProductsEditComponent {
   public productId: string = '';
   public breadcrumb: PoBreadcrumb = {
     items: [
-      { label: 'Produtos', action: () => this.router.navigate(['products']) },
+      { label: 'Produtos', action: () => this.router.navigate(['products/list']) },
       { label: '',  },
     ]
   };

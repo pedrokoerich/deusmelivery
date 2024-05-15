@@ -18,7 +18,7 @@ export class ProductsListComponent {
     { property: 'category', label: 'Categoria', type: 'string', width: '25%' },
     { property: 'fornec', label: 'Fornecedor', type: 'string', width: '10%' },
     { property: 'quantity', label: 'Quantidade', type: 'number', width: '10%' },
-    { property: 'productValue', label: 'Valor', type: 'number', width: '10%'},
+    { property: 'productValue', label: 'Valor', type: 'currency', width: '10%'},
 
   ];
   
@@ -102,8 +102,8 @@ export class ProductsListComponent {
       id: [''],
       name: [''],
       category: [''],
-      quantity: [''],
-      productValue: [''],
+      quantity: [0],
+      productValue: [0],
       fornec: ['']
     };
     const formGroup = this.fb.group(formGroupConfig);

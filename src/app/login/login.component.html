@@ -7,14 +7,15 @@
     </form>
     <po-button class="po-lg-12" p-label="Login" p-kind="primary" (p-click)="this.loginSubmit()"></po-button>
     <br>
-    <!-- Texto clicável para abrir modais -->
-    <span class="custom-link" data-toggle="modal" data-target="#forgotPasswordModal" (click)="passwordRecoveryModal.open()">Esqueceu sua senha?</span>
+    <span class="custom-link" data-toggle="modal" data-target="#forgotPasswordModal" (click)="openPasswordRecoveryModal()">Esqueceu sua senha?</span>
     <br>
-    <span class="custom-link" data-toggle="modal" data-target="#registerModal" (click)="modalNewUser.open()">Novo Registro</span>
+    <span class="custom-link" data-toggle="modal" data-target="#registerModal" (click)="openNewUserModal()">Novo Registro</span>
   </po-container>
 </div>
 
-<po-modal-password-recovery #passwordRecoveryModal></po-modal-password-recovery>
+<po-modal-password-recovery #passwordRecoveryModal (p-submit)="submitRestorPass($event)" p-type="email">
+  
+</po-modal-password-recovery>
 
 <po-modal #modalNewUser p-click-out="true" p-size="md" p-title="Cadastro de Usuário">
   <ng-container>

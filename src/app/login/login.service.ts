@@ -8,6 +8,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
+  public readonly headers = {
+    'Content-Type': 'application/json',
+    'X-PO-No-Count-Pending-Requests': 'false', 
+    'X-PO-Screen-Lock': 'true' 
+  };
+
   public autenticado = false;
   public readonly serviceApi = 'api/v1/login';
   public readonly baseUrl = environment.apiUrl;
@@ -32,6 +38,20 @@ export class LoginService {
       this.router.navigate(['/login']);
       return false;
     }
+  }
+
+  sendMailRecovery(data) {
+    const url = `${this.baseUrl}`+`api/v1/recoverypass`;
+    return this.http.post(url, data, { headers: this.headers })
+  }
+
+  logout() {
+    localStorage.removeItem('type');
+    localStorage.removeItem('token');
+  }
+
+  public isLogged() {
+    return localStorage.getItem('token');
   }
 
 }

@@ -23,7 +23,7 @@ export class UsersListComponent {
     { property: 'name', label: 'Nome', type: 'string', width: '25%' },
     { property: 'email', label: 'E-mail', type: 'string', width: '25%' },
     { property: 'phone', label: 'Celular', type: 'string', format: '(99) 99999-9999', width: '10%' },
-    { property: 'birthday', label: 'Nascimento', type: 'string', width: '10%'},
+    { property: 'birthday', label: 'Nascimento', type: 'date', format:'dd/mm/yyyy', width: '10%'},
     { property: 'genre', label: 'Gênero', type: 'string', width: '10%' },
   ];
 
