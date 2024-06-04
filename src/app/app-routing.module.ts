@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
-    canActivate: [LoginService] 
+    /* canActivate: [LoginService]  */
   },
   {
     path: 'dashboard',
@@ -51,7 +51,7 @@ const routes: Routes = [
   {
     path: 'user-password-change',
     component: UserPasswordChangeComponent,
-    canActivate: [LoginService]
+    /* canActivate: [LoginService] */
   },
   { 
     path: '**', 

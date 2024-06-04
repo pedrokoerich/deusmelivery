@@ -23,3 +23,20 @@
     text-decoration: none; /* Remover sublinhado ao passar o mouse */
   }
   
+  
+  .login-container {
+    flex: 1; /* Ocupará metade da tela */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente o conteúdo */
+  }
+  
+  .image-container {
+    flex: 1; /* Ocupará a outra metade da tela */
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* A imagem cobrirá toda a área disponível */
+  }

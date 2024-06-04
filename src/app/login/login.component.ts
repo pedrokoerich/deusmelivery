@@ -26,6 +26,19 @@ export class LoginComponent {
   @ViewChild('modalNewUser', { static: true }) modalNewUser: PoModalComponent;
   
   public formLogin: FormGroup = this.createFormLogin();
+  attempts = 3;
+  exceededAttempts: number;
+  literalsI18n: PoPageLoginLiterals;
+  loading: boolean = false;
+  loginErrors = [];
+  passwordErrors = [];
+  params: PoPageBlockedUserReasonParams = { attempts: 3, hours: 24 };
+  passwordRecovery: PoPageLoginRecovery = {
+    url: 'https://po-sample-api.onrender.com/v1/users',
+    type: PoModalPasswordRecoveryType.All,
+    contactMail: 'support@deusmelivery.com.br'
+  };
+  showPageBlocked: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,12 +52,12 @@ export class LoginComponent {
     this.LoginService.logout();
   }
   
-  loginSubmit() {
-    this.LoginService.login(this.formLogin.value).subscribe(
+  loginSubmit(formData: any) {
+    console.log(formData);
+    this.LoginService.login(formData).subscribe(
       (response) => {
         this.globals.profile.title = response['username'];
         localStorage.setItem('token', response['token']);
-        localStorage.setItem('type', response['usertype']);
         localStorage.setItem('username', response['username']);
         this.LoginService.autenticado = true;
         this.router.navigate(['/dashboard']);
@@ -53,6 +66,18 @@ export class LoginComponent {
         this.PoNotificationService.error('Erro ao efetuar login: ' + error);
       }
     );
+  }
+
+  passwordChange() {
+    if (this.passwordErrors.length) {
+      this.passwordErrors = [];
+    }
+  }
+
+  loginChange() {
+    if (this.loginErrors.length) {
+      this.loginErrors = [];
+    }
   }
 
   openPasswordRecoveryModal() {

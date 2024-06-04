@@ -1,17 +1,22 @@
-<div class="container">
-  <po-container class="po-xl-4">
-    <h2>DeusMelivery</h2>
-    <form [formGroup]="formLogin">
-      <po-login #login class="po-lg-12" name="login" formControlName="login"></po-login>
-      <po-password #pass class="po-lg-12" name="password" formControlName="password"></po-password>
-    </form>
-    <po-button class="po-lg-12" p-label="Login" p-kind="primary" (p-click)="this.loginSubmit()"></po-button>
-    <br>
-    <span class="custom-link" data-toggle="modal" data-target="#forgotPasswordModal" (click)="openPasswordRecoveryModal()">Esqueceu sua senha?</span>
-    <br>
-    <span class="custom-link" data-toggle="modal" data-target="#registerModal" (click)="openNewUserModal()">Novo Registro</span>
-  </po-container>
-</div>
+<po-page-login
+  p-hide-remember-user
+  p-login-pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+  p-logo="assets/images/logo-nova.png"
+  p-background="assets/images/background-login.jpg"
+  p-product-name="DeusMelivery"
+  [p-exceeded-attempts-warning]="exceededAttempts"
+  [p-literals]="literalsI18n"
+  [p-loading]="loading"
+  p-secondary-logo="assets/images/logo-nova.png"
+  [p-password-errors]="passwordErrors"
+  [p-login-errors]="loginErrors"
+  [p-recovery]="passwordRecovery"
+  (p-login-change)="loginChange()"
+  (p-login-submit)="this.loginSubmit($event)"
+  (p-password-change)="passwordChange()"
+>
+</po-page-login>
+
 
 <po-modal-password-recovery #passwordRecoveryModal (p-submit)="submitRestorPass($event)" p-type="email">
   

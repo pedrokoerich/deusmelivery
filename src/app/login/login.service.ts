@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export class LoginService {
   };
 
   public autenticado = false;
-  public readonly serviceApi = 'api/v1/login';
+  public readonly serviceApi = 'api/v1/auth/login';
   public readonly baseUrl = environment.apiUrl;
 
   constructor(
@@ -24,9 +24,9 @@ export class LoginService {
   ) { }
 
 
-  login(form: any): Observable<any> {
+  login(form: any): Observable<HttpResponse<any>> {
     const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.get(url, form);
+    return this.http.post(url, form,{ observe: 'response' });
   }
 
   canActivate(
