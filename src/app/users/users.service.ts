@@ -7,11 +7,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UsersService {
+  private token = localStorage.getItem('token');
   public readonly headers = { 
     'X-PO-No-Count-Pending-Requests': 'false', 
     'X-PO-Screen-Lock': 'true',
     'X-PO-Ignore-Loading': 'false',
     'X-PO-Request-Intercept': 'true',
+    'Authorization': `Bearer ${this.token}`
   };
   public readonly serviceApi = 'api/v1/users';
   public readonly baseUrl = environment.apiUrl;
@@ -28,7 +30,7 @@ export class UsersService {
 
   public getUserById(id: string): Observable<any> {
     const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.get(url);
+    return this.http.get(url, { headers: this.headers });
   }
 
 
@@ -36,10 +38,10 @@ export class UsersService {
 
     if (user.id) {
       const url = `${this.baseUrl}${this.serviceApi}/${user.id}`;
-      return this.http.put(url, user, { observe: 'response' });
+      return this.http.put(url, user, { observe: 'response', headers: this.headers});
     } else {
       const url = `${this.baseUrl}${this.serviceApi}`;
-      return this.http.post(url, user, { observe: 'response' });
+      return this.http.post(url, user, { observe: 'response', headers: this.headers});
     }
 
   }
@@ -47,7 +49,7 @@ export class UsersService {
   
   public deleteUser(id: string): Observable<HttpResponse<any>> {
     const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.delete(url, { observe: 'response' });
+    return this.http.delete(url, { observe: 'response', headers: this.headers});
   }
   
 

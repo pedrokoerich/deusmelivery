@@ -1,3 +1,56 @@
 <po-page-default p-title="Dashboard">
+    <div class="po-md-12">
+        <po-widget class="po-lg-6">
+            <po-chart
+            class="po-lg-12 po-mt-2"
+            p-title="Top 5 bebidas mais consumidas"
+            [p-series]="drinksConsumption"
+          >
+          </po-chart>
+        </po-widget>
 
+    <po-widget class="po-lg-6">
+        <po-chart
+          class="po-lg-12 po-mt-2"
+          p-title="Top 5 bairros consumidores"
+          [p-series]="neighborhoodConsumption"
+          [p-type]="neighborhoodConsumingChartType"
+        >
+        </po-chart>
+    </po-widget>
+        
+    </div>
+    
+      <div class="po-row">
+        
+        <po-chart
+        class="po-md-6 po-mt-2"
+        p-title="Vendas nos últimos 12 meses"
+        [p-options]="options"
+        [p-categories]="categories"
+        [p-series]="vendasPorCategoriaDeBebida"
+        [p-type]="vendasPorCategoriaDeBebidaType"
+      >
+      </po-chart>
+    
+        <div class="po-md-6 po-mt-2">
+          <po-widget p-height="198">
+            <div class="po-font-title po-text-center po-pt-5">{{this.qtdVendasNoAno}}</div>
+            <div class="po-text-center">Quantidade de pedidos entregues no ano</div>
+          </po-widget>
+    
+          <po-widget p-height="198">
+            <div class="po-font-title po-text-center po-pt-5">{{this.qtdVendasNoMes}}</div>
+            <div class="po-text-center">Quantidade de pedidos entregues no mês</div>
+          </po-widget>
+        </div>
+      </div>
+    
+    <div class="po-row">
+      <po-container class="po-lg-12 po-mt-2">
+        <div class="po-font-text-bold">Top 10 Clientes</div>
+    
+        <po-table p-container="shadow" [p-items]="items" [p-hide-table-search]="false"> </po-table>
+      </po-container>
+    </div>
 </po-page-default>

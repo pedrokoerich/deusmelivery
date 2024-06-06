@@ -24,9 +24,9 @@ export class LoginService {
   ) { }
 
 
-  login(form: any): Observable<HttpResponse<any>> {
+  login(form: any) {
     const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.post(url, form,{ observe: 'response' });
+    return this.http.post(url, form);
   }
 
   canActivate(

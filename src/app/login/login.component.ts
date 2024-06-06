@@ -56,6 +56,7 @@ export class LoginComponent {
     console.log(formData);
     this.LoginService.login(formData).subscribe(
       (response) => {
+        console.log(response)
         this.globals.profile.title = response['username'];
         localStorage.setItem('token', response['token']);
         localStorage.setItem('username', response['username']);
