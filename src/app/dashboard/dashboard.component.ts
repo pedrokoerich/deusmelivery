@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DashboardService } from './dashboard.service';
-import { PoChartOptions, PoChartSerie, PoChartType, PoNotificationService } from '@po-ui/ng-components';
+import { PoChartOptions, PoChartSerie, PoChartType, PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
 
 
 @Component({
@@ -20,6 +20,18 @@ export class DashboardComponent {
     { label: 'Colombia', data: 688, tooltip: 'Colombia (South America)' },
     { label: 'Indonesia', data: 682, tooltip: 'Indonesia (Asia/Oceania)' },
     { label: 'Peru', data: 273, tooltip: 'Peru (South America)' }
+  ];
+
+  public readonly columns: Array<PoTableColumn> = [
+    { property: 'STATUS', width: '10%', label: 'Status' },
+    { property: 'NAME', width: '15%', label: 'Nome', },
+    { property: 'GENRE', width: '10%', label: 'Gênero'},
+    { property: 'EMAIL', width: '15%', label: 'E-mail'},
+    { property: 'PHONE', width: '10%', label: 'Telefone' },
+    { property: 'STATE', width: '10%', label: 'Estado' },
+    { property: 'CITY', width: '10%', label: 'Cidade' },
+    { property: 'ADDRESS', width: '10%', label: 'Endereço'},
+    { property: 'ADDRESS_NUMBER', width: '10%', label: 'Nº Endereço'}
   ];
 
   public neighborhoodConsumption: Array<PoChartSerie> = [

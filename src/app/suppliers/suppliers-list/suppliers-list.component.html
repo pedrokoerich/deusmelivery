@@ -1,1 +1,29 @@
-<p>suppliers-list works!</p>
+<po-page-default p-title="Fornecedores" [p-actions]="actions"> 
+    <po-table [p-actions]="actionsTab"
+    p-container="border"
+    p-actions-right="true"
+    [p-height]="400"
+    [p-hide-batch-actions]="true"
+    [p-hide-table-search]="false"
+    (p-show-more)="this.getSuppliers(true)"
+    [p-show-more-disabled]="disableNext"
+    [p-sort]="true"
+    [p-striped]="true"
+    [p-columns]="fields"
+    [p-items]="items || []"
+    [p-max-columns]="12"
+    >
+    </po-table>
+
+    <po-modal #modalConfirm p-title="" p-size="sm">
+        <div class="po-modal-body">
+          {{ modalMessage }}
+        </div>
+        <po-modal-footer>
+          <po-button p-label="Cancelar" (p-click)="modalConfirm?.close()"> </po-button>
+          <po-button p-label="Confirmar" p-kind="primary" (p-click)="confirmDelete()"> </po-button>
+          <!-- Passa o ID do usuário como argumento para confirmDelete -->
+        </po-modal-footer>
+      </po-modal>
+      
+</po-page-default>

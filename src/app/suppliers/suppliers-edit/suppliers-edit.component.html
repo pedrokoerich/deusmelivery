@@ -1,1 +1,24 @@
-<p>suppliers-edit works!</p>
+<po-page-edit #pageEdit [p-title]="title" [p-breadcrumb]="breadcrumb">
+  <po-dynamic-form
+#dynamicForm
+p-auto-focus="name"
+[p-fields]="fields"
+[p-validate]="this.onChangeFields.bind(this)"
+[p-validate-fields]="validateFields"
+[p-value]="supplier"
+>
+</po-dynamic-form>
+
+<br />
+
+<div class="po-row">
+<po-button
+  class="po-md-3"
+  p-label="Salvar"
+  [p-disabled]="dynamicForm?.form.invalid || VISUALIZAR "
+  (p-click)="this.saveSupplier()"
+>
+</po-button>
+</div>
+
+  </po-page-edit>

@@ -132,6 +132,7 @@ export class FormUsersComponent {
     this.UsersService.getUserById(userId).pipe(
       take(1),
       tap((data: any) => {
+        console.log(data)
         this.person = data;
       }),
       finalize(() => this.loading = false)
