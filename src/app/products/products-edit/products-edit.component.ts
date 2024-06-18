@@ -39,6 +39,9 @@ export class ProductsEditComponent {
     },
     {
       property: 'category',
+      options: [{ category: 'Refrigerantes', value: '01' }, { category: 'Sucos', value: '02' }, { category: 'Cervejas', value: '03' }, { category: 'Energéticos', value: '04' }], 
+      fieldLabel: 'category', 
+      fieldValue: 'value',
       label: 'Categoria',
       type: 'string',
       gridColumns: 6,
@@ -49,7 +52,9 @@ export class ProductsEditComponent {
     {
       property: 'fornec',
       label: 'Fornecedor',
-      type: 'string',
+      optionsService: 'https://localhost:8080/api/v1/suppliers/combo',
+      fieldLabel: 'name',
+      fieldValue: 'id',
       gridColumns: 6,
       gridSmColumns: 12,
       placeholder: 'Informe o fornecedor do produto',

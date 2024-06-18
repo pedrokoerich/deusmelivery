@@ -16,8 +16,8 @@ export class UsersListComponent {
   fields: Array<PoTableColumn> = [
     {
       property: 'status', width: '8%', label: 'Status', type: 'subtitle', subtitles: [
-        { value: 'Ativo', color: 'color-11', label: 'Ativo', content: '' },
-        { value: 'Inativo', color: 'color-07', label: 'Inativo', content: '' },
+        { value: 'A', color: 'color-11', label: 'Ativo', content: '' },
+        { value: 'I', color: 'color-07', label: 'Inativo', content: '' },
       ]
     },
     { property: 'name', label: 'Nome', type: 'string', width: '25%' },

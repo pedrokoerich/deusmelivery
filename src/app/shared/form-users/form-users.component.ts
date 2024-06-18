@@ -24,7 +24,7 @@ export class FormUsersComponent {
     { property: 'login', label: 'E-mail', container: 'CONTATOS', gridColumns: 6, icon: 'po-icon-mail', pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", errorMessage: 'E-mail inválido' },
     { property: "phone", label: "Celular", mask: "(99) 99999-9999", gridColumns: 6 },
     { property: 'address', label: 'Endereço', gridColumns: 6 },
-    { property: 'addressNumber', label: 'Nº Endereço', type: 'number', gridColumns: 6 },
+    { property: 'address_number', label: 'Nº Endereço', type: 'number', gridColumns: 6 },
     { property: 'state', gridColumns: 6, options: [{ state: 'Santa Catarina', code: 'SC' }, { state: 'São Paulo', code: 'SP' }, { state: 'Rio de Janeiro', code: 'RJ' }, { state: 'Minas Gerais', code: 'MG' }], fieldLabel: 'state', fieldValue: 'code', label: 'Estado' },
     { property: 'city', disabled: true, gridColumns: 6, fieldValue: 'code', fieldLabel: 'city', label: 'Cidade' }
   ];

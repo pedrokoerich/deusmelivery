@@ -31,7 +31,7 @@ export class DashboardComponent {
     { property: 'STATE', width: '10%', label: 'Estado' },
     { property: 'CITY', width: '10%', label: 'Cidade' },
     { property: 'ADDRESS', width: '10%', label: 'Endereço'},
-    { property: 'ADDRESS_NUMBER', width: '10%', label: 'Nº Endereço'}
+    { property: 'address_number', width: '10%', label: 'Nº Endereço'}
   ];
 
   public neighborhoodConsumption: Array<PoChartSerie> = [
