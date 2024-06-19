@@ -1,22 +1,19 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { PoComboOption, PoResponseApi } from '@po-ui/ng-components';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuppliersService {
-  private token = localStorage.getItem('token');
   public readonly headers = { 
     'X-PO-No-Count-Pending-Requests': 'false', 
     'X-PO-Screen-Lock': 'true',
     'X-PO-Ignore-Loading': 'false',
-    'X-PO-Request-Intercept': 'true',
-    'Authorization': `Bearer ${this.token}`
+    'X-PO-Request-Intercept': 'true'
   };
   public readonly serviceApi = 'api/v1/suppliers';
-  public readonly baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient
@@ -24,32 +21,49 @@ export class SuppliersService {
   }
 
   public get(): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(this.serviceApi, { headers: this.headers });
+  }
+
+  public getCombo(filter: String) {
+    console.log('filter', filter)
+    console.log(this.serviceApi+'/combo?filter='+filter)
+    return this.http.get(this.serviceApi+'/combo?filter='+filter, { headers: this.headers });
   }
 
   public getUserById(id: string): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(this.serviceApi+`/${id}`, { headers: this.headers });
   }
 
 
   public saveSupplier(supplier: any): Observable<HttpResponse<any>> { 
 
     if (supplier.id) {
-      const url = `${this.baseUrl}${this.serviceApi}/${supplier.id}`;
-      return this.http.put(url, supplier, { observe: 'response', headers: this.headers});
+      return this.http.put(`${this.serviceApi}/${supplier.id}`, supplier, { observe: 'response', headers: this.headers});
     } else {
-      const url = `${this.baseUrl}${this.serviceApi}`;
-      return this.http.post(url, supplier, { observe: 'response', headers: this.headers});
+      return this.http.post(`${this.serviceApi}`, supplier, { observe: 'response', headers: this.headers});
     }
 
   }
 
-  
   public deleteSupplier(id: string): Observable<HttpResponse<any>> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.delete(url, { observe: 'response', headers: this.headers});
+    return this.http.delete(`${this.serviceApi}/${id}`, { observe: 'response', headers: this.headers});
+  }
+
+  getFilteredData(param: any, filterParams?: any): Observable<Array<PoComboOption>> {
+    const value = param.value;
+    const params = { ...filterParams, filter: value };
+    return this.http.get<any[]>(`${this.serviceApi}/combo`, { params })
+      .pipe(map(response => response.map(item => ({
+        label: item.label,
+        value: item.value
+      }))));
+  }
+  
+  getObjectByValue(value: any, filterParams?: any): Observable<PoComboOption> {
+    const params: any = { ...filterParams, filter: value };
+    return this.http.get<any[]>(`${this.serviceApi}/combo`, { params })
+    .pipe(map(response => response[0]));
+
   }
 
   getCity(state: string) {

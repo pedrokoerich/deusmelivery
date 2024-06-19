@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SuppliersListComponent } from './suppliers-list/suppliers-list.component';
 import { SuppliersEditComponent } from './suppliers-edit/suppliers-edit.component';
 import { PoButtonModule, PoContainerModule, PoLoadingModule, PoModule, PoPageModule, PoWidgetModule } from '@po-ui/ng-components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PoTemplatesModule } from '@po-ui/ng-templates';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SuppliersRoutingModule } from './suppliers-routing.module';
+import { AuthInterceptor } from '../auth.interceptor';
 
 
 @NgModule({
@@ -25,8 +26,9 @@ import { SuppliersRoutingModule } from './suppliers-routing.module';
     PoButtonModule,
     PoWidgetModule,
     PoContainerModule,
-    HttpClientModule
+    HttpClientModule,
 
-  ]
+
+  ],
 })
 export class SuppliersModule { }
