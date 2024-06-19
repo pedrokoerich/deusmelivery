@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
 import { PoButtonModule, PoContainerModule, PoFieldModule, PoLoadingModule, PoModule, PoPageModule, PoTableModule, PoWidgetModule } from '@po-ui/ng-components';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { PoPageChangePasswordModule, PoTemplatesModule } from '@po-ui/ng-templates';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -18,6 +18,7 @@ import { FormUsersComponent } from './shared/form-users/form-users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';
 import { UserPasswordChangeComponent } from './user-password-change/user-password-change.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,11 @@ import { UserPasswordChangeComponent } from './user-password-change/user-passwor
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt' },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' }
     

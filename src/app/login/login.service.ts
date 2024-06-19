@@ -26,7 +26,7 @@ export class LoginService {
 
   login(form: any) {
     const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.post(url, form);
+    return this.http.post('api/v1/auth/login', form);
   }
 
   canActivate(
