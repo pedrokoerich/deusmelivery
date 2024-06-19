@@ -1,21 +1,80 @@
 <po-page-edit #pageEdit [p-title]="title" [p-breadcrumb]="breadcrumb">
-    <po-dynamic-form
-        #dynamicForm
-        p-auto-focus="name"
-        [p-fields]="fields"
-        [p-validate-fields]="validateFields"
-        [p-value]="product"
+    <form [formGroup]="form" (ngSubmit)="saveProduct()">
+        <po-input
+            p-label="Produto"
+            p-clean="true"
+            p-placeholder="Informe o nome do produto"
+            formControlName="name"
+            name="name"
+            [p-required]="true"
+            [p-disabled]="VISUALIZAR"
         >
-    </po-dynamic-form>
+        </po-input>
+        <po-select
+            p-label="Categoria"
+            p-placeholder="Selecione a categoria do produto"
+            formControlName="category"
+            name="category"
+            [p-required]="true"
+            [p-options]="options"
+            p-clean="true"
+            [p-disabled]="VISUALIZAR"
+        >
+        </po-select>
+        <po-combo 
+            p-label="Fornecedor" 
+            formControlName="fornec" 
+            name="fornec"
+            [p-required]="true"
+            p-placeholder="Digite o nome do fornecedor com no mínimo 3 letras"
+            p-field-label="label" 
+            p-field-value="value" 
+            [p-disabled]="VISUALIZAR"
+            [p-filter-service]="SuppliersService" 
+            p-emit-object-value="true">
+            <ng-template p-combo-option-template let-option>
+                <div class="po-row">
+                  <div class="po-sm-12 po-md-12 po-lg-12">
+                    <div class="po-font-text-large-bold">{{ option.label }}</div>
+                    <div class="po-font-text-smaller">{{ option.value }}</div>
+                  </div>
+                </div>
+              </ng-template>
+        </po-combo>
+        <po-decimal
+        name="productValue"
+        formControlName="productValue"
+        [p-disabled]="VISUALIZAR"
+        p-decimals-length="2"
+        p-icon="po-icon-finance"
+        p-label="Valor do Produto"
+        p-placeholder="Informe o valor do produto"
+        [p-required]="true"
+        p-thousand-maxlength="13"
+      >
+      </po-decimal>
+        <po-number
+            p-label="Quantidade"
+            p-placeholder="Quantidade em estoque"
+            formControlName="quantity"
+            name="quantity"
+            [p-required]="true"
+            p-clean="true"
+            p-step="1"
+            [p-min]="0"
+            [p-disabled]="VISUALIZAR"
+        >
+        </po-number>
+    </form>
 
-    <br />
+    <br/>
 
     <div class="po-row">
-        <po-button
+        <po-button 
           class="po-md-3"
           p-label="Save"
-          [p-disabled]="dynamicForm?.form.invalid || VISUALIZAR "
-          (p-click)="this.saveUser()"
+          [p-disabled]="form.invalid || VISUALIZAR "
+          (p-click)="this.saveProduct()"
         >
         </po-button>
     </div>

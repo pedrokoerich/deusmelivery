@@ -1,5 +1,8 @@
+import { environment } from './../../../environments/environment';
+import { SuppliersService } from './../../suppliers/suppliers.service';
 import { ProductsService } from './../products.service';
 import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PoBreadcrumb, PoDynamicFormField, PoDynamicFormFieldChanged, PoDynamicFormValidation, PoNotificationService } from '@po-ui/ng-components';
 import { finalize, take, tap } from 'rxjs';
@@ -10,7 +13,11 @@ import { finalize, take, tap } from 'rxjs';
   styleUrl: './products-edit.component.css'
 })
 export class ProductsEditComponent {
+  public readonly baseUrl = environment.apiUrl;
+
+  public serviceSuppliersApi = `${this.baseUrl}api/v1/suppliers/combo`;
   public productId: string = '';
+  public form: any = this.createReactiveForm();
   public breadcrumb: PoBreadcrumb = {
     items: [
       { label: 'Produtos', action: () => this.router.navigate(['products/list']) },
@@ -18,66 +25,18 @@ export class ProductsEditComponent {
     ]
   };
 
-
-
-  fields: Array<PoDynamicFormField> = [
-    {
-      property: 'id',
-      gridColumns: 6,
-      gridSmColumns: 12,
-      label: 'Cod Produto',
-      visible: false
-    },
-    {
-      property: 'name',
-      required: true,
-      gridColumns: 6,
-      gridSmColumns: 12,
-      order: 1,
-      placeholder: 'Informe o nome do produto',
-      label: 'Produto',
-    },
-    {
-      property: 'category',
-      options: [{ category: 'Refrigerantes', value: '01' }, { category: 'Sucos', value: '02' }, { category: 'Cervejas', value: '03' }, { category: 'Energéticos', value: '04' }], 
-      fieldLabel: 'category', 
-      fieldValue: 'value',
-      label: 'Categoria',
-      type: 'string',
-      gridColumns: 6,
-      gridSmColumns: 12,
-      order: -1,
-      placeholder: 'Informe a categoria do produto',
-    },
-    {
-      property: 'fornec',
-      label: 'Fornecedor',
-      optionsService: 'https://localhost:8080/api/v1/suppliers/combo',
-      fieldLabel: 'name',
-      fieldValue: 'id',
-      gridColumns: 6,
-      gridSmColumns: 12,
-      placeholder: 'Informe o fornecedor do produto',
-    },
-    {
-      property: 'productValue',
-      type: 'currency',
-      gridColumns: 6,
-      gridSmColumns: 12,
-      decimalsLength: 2,
-      thousandMaxlength: 7,
-      icon: 'po-icon-finance',
-      label: 'Valor do Produto',
-      placeholder: 'Informe o valor unitário do produto'
-    },
-    {
-      property: 'quantity',
-      label: 'Quantidade em Estoque',
-      type: 'number',
-      gridColumns: 6,
-      placeholder: 'Informe a quantidade em estoque do produto',
-    },
-
+  public suppliers: Array<any> = [];
+  public options: Array<any> = [
+    { value: '01', label: 'Sucos' },
+    { value: '02', label: 'Refrigerantes' },
+    { value: '03', label: 'Cervejas' },
+    { value: '04', label: 'Vinhos' },
+    { value: '05', label: 'Whisky' },
+    { value: '06', label: 'Vodkas' },
+    { value: '07', label: 'Cachaças' },
+    { value: '08', label: 'Energéticos' },
+    { value: '09', label: 'Águas' },
+    { value: '10', label: 'Outros' },
   ];
 
   product = {};
@@ -91,8 +50,10 @@ export class ProductsEditComponent {
   constructor(
     public poNotification: PoNotificationService,
     private ProductsService: ProductsService,
-    private router: Router,
-    private routeActive: ActivatedRoute
+    public  SuppliersService: SuppliersService,
+    public router: Router,
+    private routeActive: ActivatedRoute,
+    public fb: FormBuilder,
   ) {}
 
   ngOnInit() {
@@ -107,40 +68,69 @@ export class ProductsEditComponent {
       this.title = 'Inclusão de Produto';
     }
 
-    this.userId = this.routeActive.snapshot.paramMap.get('id');
-    if (this.userId) {
-      this.loadProduct(this.userId);
+    this.productId = this.routeActive.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.loadProduct(this.productId);
     }
   }
 
 
 
-  public saveUser(): void{
-    this.ProductsService.saveProduct(this.product).subscribe(
+  public saveProduct(): void{
+    this.ProductsService.saveProduct(this.form.value).subscribe(
       (response) => {
         if (response.status === 200) {
           this.poNotification.success('Produto cadastrado com sucesso!');
         } else {
           this.poNotification.error('Erro ao salvar o produto. Código de status:' + response.status);
         }
-      },
-      (error) => {
-        this.poNotification.error('Erro ao chamar o serviço saveProduct:' + error);
       }
     );
     this.router.navigate(['/products/list']);
   }
 
 
-  loadProduct(userId: string) {
-    this.ProductsService.getProductById(userId).pipe(
+  loadProduct(productId: string) {
+    this.ProductsService.getProductById(productId).pipe(
       take(1),
       tap((data: any) => {
-          this.product = data;
+        this.form.patchValue({
+          id: data.id,
+          name: data.name,
+          category: data.category,
+          quantity: data.quantity,
+          fornec: data.fornec,
+          productValue: data.productValue
+        });
+
       }),
       finalize(() => this.loading = false)
     ).subscribe();
+  }
+  createReactiveForm() {
+    const formGroupConfig = {
+      id: [''],
+      name: [''],
+      category: [''],
+      quantity: [0],
+      productValue: [0],
+      fornec: ['']
+    };
+    const formGroup = this.fb.group(formGroupConfig);
+    return formGroup;
+  }
 
+  public getSuppliersCombo(dado: any) {
+    this.suppliers.length = 0;
+    console.log('dado', dado);
+    if (dado) {
+      this.SuppliersService.getCombo(dado).pipe(take(1)).subscribe(
+        (data: any) => {
+          console.log('data', data.items)
+          this.suppliers = data.items;
+        }
+      );
+    }
   }
 
 }

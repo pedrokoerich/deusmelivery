@@ -15,16 +15,16 @@ export class ProductsListComponent {
 
   fields: Array<PoTableColumn> = [
     { property: 'name', label: 'Produto', type: 'string', width: '25%' },
-    { property: 'category', label: 'Categoria', type: 'string', width: '25%' },
+    { property: 'category', label: 'Categoria', type: 'string', width: '25%'},
     { property: 'fornec', label: 'Fornecedor', type: 'string', width: '10%' },
-    { property: 'quantity', label: 'Quantidade', type: 'number', width: '10%' },
-    { property: 'productValue', label: 'Valor', type: 'currency', width: '10%'},
+    { property: 'quantity', label: 'Quantidade', type: 'number', width: '10%', },
+    { property: 'productValue', label: 'Valor', type: 'number', width: '10%'},
 
   ];
   
   public readonly actions: Array<PoPageAction> = [
-    { label: 'Novo', icon: 'po-icon-plus', action: () => this.router.navigate(['/products/new']) },
-    { label: 'Atualizar', icon: 'po-icon-refresh', action: () => this.getProducts() }
+    { label: 'Novo', icon: 'po-icon-plus', action: () => this.router.navigate(['/products/new'])},
+    { label: 'Atualizar', icon: 'po-icon-refresh', action: () => this.getProducts()}
   ];
 
   public actionsTab: Array<PoTableAction> = [

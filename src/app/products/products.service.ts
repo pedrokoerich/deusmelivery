@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,33 +22,24 @@ export class ProductsService {
   ) {
   }
 
-
   public get(): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(this.serviceApi, { headers: this.headers });
   }
 
   public saveProduct(product: any): Observable<HttpResponse<any>> { 
-
     if (product.id) {
-      const url = `${this.baseUrl}${this.serviceApi}/${product.id}`;
-      return this.http.put(url, product, { observe: 'response' });
+      return this.http.put(`${this.serviceApi}/${product.id}`, product, { observe: 'response' });
     } else {
-      const url = `${this.baseUrl}${this.serviceApi}`;
-      return this.http.post(url, product, { observe: 'response' });
+      console.log('product', product)
+      return this.http.post(this.serviceApi, product, { observe: 'response' });
     }
-
   }
 
-
   public deleteProduct(id: string): Observable<HttpResponse<any>> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.delete(url, { observe: 'response' });
+    return this.http.delete(`${this.serviceApi}/${id}`, { observe: 'response' });
   }
 
   getProductById(id: string): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(`${this.serviceApi}/${id}`, { headers: this.headers });
   }
-
 }
