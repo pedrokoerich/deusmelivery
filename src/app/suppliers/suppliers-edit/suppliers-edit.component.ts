@@ -22,7 +22,7 @@ export class SuppliersEditComponent {
     { property: 'name', container: 'DADOS CADASTRAIS', required: true, gridColumns: 6, gridSmColumns: 12, order: 1, placeholder: 'Informe o nome do fornecedor', label: 'Nome' },
     { property: 'fantasyName',  required: false, gridColumns: 6, gridSmColumns: 12, order: 1, placeholder: 'Nome Fantasia', label: 'Nome Fantasia' },
     { property: 'cnpj', label: 'CNPJ', mask: '99.999.999/9999-99', gridColumns: 6, gridSmColumns: 12 },
-    { property: 'status', label: 'Status', gridColumns: 3, type: 'boolean', booleanTrue: 'Ativo', booleanFalse: 'Inativo', formatModel: true },
+    { property: 'status', label: 'Status', gridColumns: 3, type: 'boolean', options:[{value: 'A', label: 'Ativo'}, {value:'I', label:'Inativo'}], fieldLabel: 'label', fieldValue: 'value',formatModel: true },
     { property: 'email', label: 'E-mail', container: 'CONTATOS', gridColumns: 6, icon: 'po-icon-mail', pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", errorMessage: 'E-mail inválido' },
     { property: "phone", label: "Telefone", mask: "(99) 99999-9999", gridColumns: 6 },
     { property: 'address', label: 'Endereço', gridColumns: 6 },

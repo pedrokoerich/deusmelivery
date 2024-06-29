@@ -4,6 +4,7 @@ import { PoModalComponent, PoNotificationService, PoPageAction, PoTableAction, P
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, take, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -60,28 +61,34 @@ export class ProductsListComponent {
     private productsService: ProductsService,
     private poNotification: PoNotificationService,
     public fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private routeActive: ActivatedRoute
 
   ) { }
 
   ngOnInit() {
-    this.getProducts();
+    this.routeActive.params.subscribe(params => {
+      const category = params['category'];
+      this.getProducts(false, category);
+    });
   }
 
-  getProducts(lShowMore = false) {
+  getProducts(lShowMore = false, category?: string) {
     if (lShowMore) {
       this.page++;
     } else {
       this.page = 1;
     }
-    let filters = {
-      page: this.page
+    
+    let filters: any = {
+      page: this.page,
+      categoryFilter: category
     };
+    
     filters = Object.assign(filters, this.reactiveForm.value);
-
     this.loading = true;
   
-    this.productsService.get().pipe(
+    this.productsService.get(filters).pipe(
       take(1),
       tap((data: any) => {
         if (lShowMore) {
@@ -90,11 +97,12 @@ export class ProductsListComponent {
           this.items = data;
         }
         this.disableNext = !data.hasNext;
-        console.log(this.items)
+        console.log(this.items);
       }),
       finalize(() => this.loading = false)
     ).subscribe();
   }
+  
 
 
   createReactiveForm() {

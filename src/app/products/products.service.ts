@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -22,8 +22,14 @@ export class ProductsService {
   ) {
   }
 
-  public get(): Observable<any> {
-    return this.http.get(this.serviceApi, { headers: this.headers });
+  public getIndicadores(): Observable<any> {
+    return this.http.get(`${this.serviceApi}/indicadores`, { headers: this.headers });
+  }
+
+
+  public get(filters: any = {}): Observable<any> {
+    console.log('filters', filters)
+    return this.http.get<any>(`${this.serviceApi}`, { params: filters });
   }
 
   public saveProduct(product: any): Observable<HttpResponse<any>> { 

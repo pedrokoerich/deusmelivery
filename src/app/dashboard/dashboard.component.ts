@@ -68,18 +68,78 @@ export class DashboardComponent {
   ) { }
 
   ngOnInit():void {
-    this.getItems()
+    this.getTop5BebidasMaisConsumidas();
+    this.getTop5BairrosMaisConsumidores();
+    this.getVendasNosUltimos12Meses();
+    this.getVendasNoAno();
+    this.getVendasNoMes();
+    this.getTop10ClientesFieis();
   }
 
-  public getItems() {
+  public getTop5BebidasMaisConsumidas() {
 
-    this.dashboardService.getItems().subscribe(
-      (response) => {
+    this.dashboardService.getTop5BebidasMaisConsumidas().subscribe({
+      next: (response) => {
         console.log(response)
       },
-      (error) => {
+      error: (error) => {
         this.notification.error('Error')
       }
-    )
+    });
+  }
+
+  public getTop5BairrosMaisConsumidores() {
+    this.dashboardService.getTop5BairrosMaisConsumidores().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        this.notification.error('Error')
+      }
+    });
+  }
+
+  public getVendasNosUltimos12Meses() {
+    this.dashboardService.getVendasNosUltimos12Meses().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        this.notification.error('Error')
+      }
+    });
+  }
+
+  public getVendasNoAno() {
+    this.dashboardService.getVendasNoAno().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        this.notification.error('Error')
+      }
+    });
+  }
+
+  public getVendasNoMes() {
+    this.dashboardService.getVendasNoMes().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        this.notification.error('Error')
+      }
+    });
+  }
+
+  public getTop10ClientesFieis() {
+    this.dashboardService.getTop10ClientesFieis().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        this.notification.error('Error')
+      }
+    });
   }
 }

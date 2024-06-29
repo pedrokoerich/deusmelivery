@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { PoModalComponent, PoTableAction, PoTableComponent } from '@po-ui/ng-components';
+import { PoModalComponent, PoTableAction, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
 import { take, tap, finalize } from 'rxjs';
 import { SalesOrdersService } from '../sales-orders/sales-orders.service';
 
@@ -21,19 +21,19 @@ export class SalesOrdersComponent {
   public detail: any; 
 
 
-  columns = [
-    { property: 'id', label: 'Código', align: 'right', readonly: true, freeze: true, width: "120" },
-    { property: 'produto', label: 'Produto', width: '200px', required: true },
-    { property: 'valorUnitario', label: 'Valor Un.', width: "150" },
-    { property: 'quantidade', label: 'Quant.', width: "100", required: true },
-    { property: 'valorTotal', label: 'Total', align: 'center', width: "80" },
-    { property: 'fornecedor', label: 'Fornec.', align: 'center', width: "140" },
-    { property: 'dataEntrega', label: 'Data Entrega', type:'date', format: 'dd/MM/yyyy', align: 'center', width: "140" },
-    { property: 'horaEntrega', label: 'Hora Entrega', align: 'center', width: "140" },
-    { property: 'cliente', label: 'Cliente', align: 'center', width: "140" }
+  columns: Array<PoTableColumn> = [
+    { property: 'id', label: 'Código', width: "120" },
+    { property: 'productName', label: 'Produto', width: '200px' },
+    { property: 'price', label: 'Valor Un.', width: "150" },
+    { property: 'quantity', label: 'Quant.', width: "100" },
+    { property: 'totalPrice', label: 'Total',  width: "80" },
+    { property: 'supplierName', label: 'Fornec.',  width: "140" },
+    { property: 'dataEntrega', label: 'Data Entrega', type:'date', format: 'dd/MM/yyyy',  width: "140" },
+    { property: 'horaEntrega', label: 'Hora Entrega',  width: "140" },
+    { property: 'userName', label: 'Cliente',  width: "140" }
   ];
 
-  ngonInit() {
+  ngOnInit():void {
     this.getItems();
   }
 
@@ -41,7 +41,7 @@ export class SalesOrdersComponent {
     private SalesOrdersService: SalesOrdersService,
   ) { }
 
-  getItems(lShowMore = false) {
+  public getItems(lShowMore = false) {
     if (lShowMore) {
       this.page++;
     } else {
@@ -64,7 +64,6 @@ export class SalesOrdersComponent {
         }
         console.log(this.items)
         this.disableNext = !data.hasNext;
-        console.log(this.items)
       }),
       finalize(() => this.loading = false)
     ).subscribe();
@@ -73,21 +72,35 @@ export class SalesOrdersComponent {
   
 
   sumTotal(row: any) {
-    if (row.value) {
-      this.total += row.value;
+    if (row.totalPrice) {
+      this.total += row.totalPrice;
     }
   }
 
   decreaseTotal(row: any) {
-    if (row.value) {
-      this.total -= row.value;
+    if (row.totalPrice) {
+      this.total -= row.totalPrice;
     }
+  }
+
+  sumAll() {
+    this.total = 0;
+    this.items.forEach((row) => {
+      this.sumTotal(row.totalPrice);
+    });
+  }
+
+  decreaseAll() {
+    this.total = 0;
+    this.items.forEach((row) => {
+      this.decreaseTotal(row.totalPrice);
+    });
   }
 
 
   discount(item) {
     if (!item.disableDiscount) {
-      const updatedItem = { ...item, value: item.value - item.value * 0.2, disableDiscount: true };
+      const updatedItem = { ...item, value: item.totalPrice - item.totalPrice * 0.2, disableDiscount: true };
       this.poTable.updateItem(item, updatedItem);
     }
   }

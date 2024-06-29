@@ -23,8 +23,8 @@ export class UsersListComponent {
     { property: 'name', label: 'Nome', type: 'string', width: '25%' },
     { property: 'login', label: 'E-mail', type: 'string', width: '25%' },
     { property: 'phone', label: 'Celular', type: 'string', format: '(99) 99999-9999', width: '10%' },
-    { property: 'birthday', label: 'Nascimento', type: 'date', format:'dd/mm/yyyy', width: '10%'},
-    { property: 'genre', label: 'Gênero', type: 'string', width: '10%' },
+    { property: 'birthday', label: 'Nascimento',type: 'date', width: '10%'},
+    { property: 'genre', label: 'Gênero', type: 'string', width: '10%'  },
   ];
 
   public readonly actions: Array<PoPageAction> = [
@@ -92,11 +92,17 @@ export class UsersListComponent {
     this.usersService.get().pipe(
       take(1),
       tap((data: any) => {
-        if (lShowMore) {
-          this.items.push(...data);
-        } else {
-          this.items = data;
-        }
+        // Mapear os valores de genre
+        const mappedData = data.map(user => ({
+          ...user,
+          genre: user.genre === 'M' ? 'Masculino' : user.genre === 'F' ? 'Feminino' : user.genre
+        }));
+
+      if (lShowMore) {
+        this.items.push(...mappedData);
+      } else {
+        this.items = mappedData;
+      }
         this.disableNext = !data.hasNext;
         console.log(this.items)
       }),

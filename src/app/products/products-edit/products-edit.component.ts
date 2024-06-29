@@ -30,11 +30,11 @@ export class ProductsEditComponent {
     { value: '01', label: 'Sucos' },
     { value: '02', label: 'Refrigerantes' },
     { value: '03', label: 'Cervejas' },
-    { value: '04', label: 'Vinhos' },
+    { value: '04', label: 'Energéticos' },
     { value: '05', label: 'Whisky' },
     { value: '06', label: 'Vodkas' },
     { value: '07', label: 'Cachaças' },
-    { value: '08', label: 'Energéticos' },
+    { value: '08', label: 'Vinhos' },
     { value: '09', label: 'Águas' },
     { value: '10', label: 'Outros' },
   ];

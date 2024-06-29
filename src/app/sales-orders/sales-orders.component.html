@@ -1,6 +1,6 @@
 <po-page-default p-title="Pedidos">
     <po-table
-  [p-container]="true"
+  p-container="border"
   [p-height]="400"
   [p-hide-batch-actions]="false"
   [p-hide-table-search]="false"
@@ -8,10 +8,11 @@
   [p-sort]="true"
   [p-striped]="true"
   [p-columns]="columns"
-  [p-items]="items"
-  [p-max-columns]="7"
+  [p-items]="items || []"
   (p-selected)="sumTotal($event)"
   (p-unselected)="decreaseTotal($event)"
+  (p-all-selected)="sumAll()"
+  (p-all-unselected)="decreaseAll()"
 >
 </po-table>
 

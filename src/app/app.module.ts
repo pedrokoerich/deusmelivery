@@ -49,7 +49,6 @@ import { AuthInterceptor } from './auth.interceptor';
         PoPageChangePasswordModule 
     ],
     providers: [
-        { provide: LOCALE_ID, useValue: 'pt' },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

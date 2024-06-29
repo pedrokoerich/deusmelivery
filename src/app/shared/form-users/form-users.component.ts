@@ -18,9 +18,8 @@ export class FormUsersComponent {
     { property: 'cpf', label: 'CPF', mask: '999.999.999-99', gridColumns: 6, gridSmColumns: 12, visible: false, disabled: true },
     { property: 'cnpj', label: 'CNPJ', mask: '99.999.999/9999-99', gridColumns: 6, gridSmColumns: 12, visible: false },
     { property: 'genre', label: 'Gênero', gridColumns: 6, gridSmColumns: 12, options: [{ label: 'Masc', value: 'M' }, { label: 'Fem', value: 'F' }, { label: 'Outro', value: 'O' }], order: 2, fieldLabel: 'label', fieldValue: 'value' },
-    { property: 'password', label: 'Senha', gridColumns: 6, secret: true, pattern: '^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
-    , errorMessage: 'São necessários pelo menos 5 caracteres alfabéticos e 3 numéricos.', placeholder: 'Crie sua senha', disabled: true },
-    { property: 'status', label: 'Status', gridColumns: 3, type: 'boolean', booleanTrue: 'Ativo', booleanFalse: 'Inativo', formatModel: true },
+    { property: 'password', label: 'Senha', gridColumns: 6, secret: true, placeholder: 'Crie sua senha', disabled: true },
+    { property: 'status', label: 'Status', gridColumns: 3, type: 'boolean', options:[{value: 'A', label: 'Ativo'}, {value:'I', label:'Inativo'}], fieldLabel: 'label', fieldValue: 'value',formatModel: true },
     { property: 'login', label: 'E-mail', container: 'CONTATOS', gridColumns: 6, icon: 'po-icon-mail', pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", errorMessage: 'E-mail inválido' },
     { property: "phone", label: "Celular", mask: "(99) 99999-9999", gridColumns: 6 },
     { property: 'address', label: 'Endereço', gridColumns: 6 },
@@ -60,7 +59,7 @@ export class FormUsersComponent {
       };
       this.enablePasswordAndCpf();
     }
-
+    console.log(this.routeActive.snapshot.paramMap.get('id'))
     this.userId = this.routeActive.snapshot.paramMap.get('id');
     if (this.userId) {
       // Se o ID existe na URL, chame a função para carregar o usuário
@@ -122,7 +121,7 @@ export class FormUsersComponent {
         }
       },
       (error) => {
-        this.poNotification.error('Erro ao chamar o serviço saveUser:' + error);
+        this.poNotification.error('Erro ao chamar o serviço saveUser:' + error.message);
       }
     );
     this.router.navigate(['/users']);

@@ -14,13 +14,32 @@ export class DashboardService {
     'X-PO-Request-Intercept': 'true',
     'Authorization': `Bearer ${this.token}`
   };
-  public readonly serviceApi = 'api/v1/dashboard';
-  public readonly baseUrl = environment.apiUrl;
+  public readonly serviceApi = 'api/v1/sales_orders';
   constructor(
     private http:HttpClient
   ) { }
 
-  public getItems() {
-    return this.http.get(`${this.baseUrl}${this.serviceApi}`, { headers: this.headers })
+  public getTop5BebidasMaisConsumidas() {
+    return this.http.get(`${this.serviceApi}/Top5BebidasMaisConsumidas`, { headers: this.headers })
+  }
+
+  public getTop5BairrosMaisConsumidores() {
+    return this.http.get(`${this.serviceApi}/Top5BairrosMaisConsumidores`, { headers: this.headers })
+  }
+
+  public getVendasNosUltimos12Meses() {
+    return this.http.get(`${this.serviceApi}/VendasNosUltimos12Meses`, { headers: this.headers })
+  }
+
+  public getVendasNoAno() {
+    return this.http.get(`${this.serviceApi}/VendasNoAno`, { headers: this.headers })
+  }
+
+  public getVendasNoMes() {
+    return this.http.get(`${this.serviceApi}/VendasNoMes`, { headers: this.headers })
+  }
+
+  public getTop10ClientesFieis() {
+    return this.http.get(`${this.serviceApi}/Top10ClientesFieis`, { headers: this.headers })
   }
 }

@@ -1,7 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +12,8 @@ export class UsersService {
     'X-PO-Screen-Lock': 'true',
     'X-PO-Ignore-Loading': 'false',
     'X-PO-Request-Intercept': 'true',
-    'Authorization': `Bearer ${this.token}`
   };
   public readonly serviceApi = 'api/v1/users';
-  public readonly baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient
@@ -24,32 +21,27 @@ export class UsersService {
   }
 
   public get(): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(this.serviceApi, { headers: this.headers });
   }
 
   public getUserById(id: string): Observable<any> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(`${this.serviceApi}/${id}`, { headers: this.headers });
   }
 
 
   public saveUser(user: any): Observable<HttpResponse<any>> { 
-
+    console.log(user)
     if (user.id) {
-      const url = `${this.baseUrl}${this.serviceApi}/${user.id}`;
-      return this.http.put(url, user, { observe: 'response', headers: this.headers});
+      return this.http.put(`${this.serviceApi}/${user.id}`, user, { observe: 'response', headers: this.headers});
     } else {
-      const url = `${this.baseUrl}${this.serviceApi}`;
-      return this.http.post(url, user, { observe: 'response', headers: this.headers});
+      return this.http.post(this.serviceApi, user, { observe: 'response', headers: this.headers});
     }
 
   }
 
   
   public deleteUser(id: string): Observable<HttpResponse<any>> {
-    const url = `${this.baseUrl}${this.serviceApi}/${id}`;
-    return this.http.delete(url, { observe: 'response', headers: this.headers});
+    return this.http.delete(`${this.serviceApi}/${id}`, { observe: 'response', headers: this.headers});
   }
   
 

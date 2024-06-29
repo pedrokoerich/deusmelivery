@@ -1,32 +1,22 @@
 <po-page-default p-title="Produtos">
     <div class="po-row">
         <po-widget
-          class="po-lg-12 po-mt-12"
-          p-background=""
-          p-height="210"
-          p-primary-label="Ver mais"
-          p-title="Promocional"
-        >
-        </po-widget>
-    </div>
-    <div class="po-row">
-        <po-widget
           class="po-lg-6 po-mt-2"
           p-height="210"
           p-primary-label="Ver mais"
-          (p-primary-action)="goToProducts()"
+          (p-primary-action)="goToProducts('01')"
           p-title="Sucos"
         >
-        <div class="po-font-subtitle po-text-center">10</div>
+        <div class="po-font-subtitle po-text-center">{{this.sucosQTD}}</div>
         </po-widget>
         <po-widget
           class="po-lg-6 po-mt-2"
           p-height="210"
           p-primary-label="Ver mais"
-          (p-primary-action)="goToProducts()"
+          (p-primary-action)="goToProducts('02')"
           p-title="Refrigerantes"
         >
-        <div class="po-font-subtitle po-text-center">15</div>
+        <div class="po-font-subtitle po-text-center">{{this.refrigerantesQTD}}</div>
         <div class="po-text-center">poucas unidades de Pureza e Coca-Cola...</div>
         </po-widget>
     </div>
@@ -35,21 +25,21 @@
           class="po-lg-6 po-mt-2"
           p-height="210"
           p-primary-label="Ver mais"
-          (p-primary-action)="goToProducts()"
+          (p-primary-action)="goToProducts('03')"
           p-title="Cervejas"
         >
-      <div class="po-font-subtitle po-text-center">22</div>
+      <div class="po-font-subtitle po-text-center">{{this.cervejasQTD}}</div>
       <div class="po-text-center">poucas unidades de Heineken...</div>
       </po-widget>
       <po-widget
           class="po-lg-6 po-mt-2"
           p-height="210"
           p-primary-label="Ver mais"
-          (p-primary-action)="goToProducts()"
+          (p-primary-action)="goToProducts('04')"
           p-title="Energéticos"
         >
-        <div class="po-font-subtitle po-text-center">22</div>
-        <div class="po-text-center">poucas unidades de Heineken...</div>
+        <div class="po-font-subtitle po-text-center">{{this.energeticosQTD}}</div>
+        <div class="po-text-center">RedBull está em alta!</div>
         </po-widget>
     </div>
 </po-page-default>

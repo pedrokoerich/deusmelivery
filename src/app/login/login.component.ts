@@ -64,7 +64,7 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       (error) => {
-        this.PoNotificationService.error('Erro ao efetuar login: ' + error);
+        this.PoNotificationService.error('Erro ao efetuar login: ' + error.message);
       }
     );
   }
