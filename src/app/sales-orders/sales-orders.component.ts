@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { PoModalComponent, PoTableAction, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
+import { PoModalComponent, PoNotificationService, PoTableAction, PoTableColumn, PoTableComponent } from '@po-ui/ng-components';
 import { take, tap, finalize } from 'rxjs';
 import { SalesOrdersService } from '../sales-orders/sales-orders.service';
 
@@ -11,6 +11,7 @@ import { SalesOrdersService } from '../sales-orders/sales-orders.service';
 export class SalesOrdersComponent {
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
+  @ViewChild('modalConfirm', { static: true }) modalConfirm: PoModalComponent | undefined;
   
   public items: Array<any> = []
   public lShowMore: boolean = false;
@@ -19,7 +20,12 @@ export class SalesOrdersComponent {
   public loading: boolean = false;
   public disableNext: boolean = false;
   public detail: any; 
+  public modalMessage: string = '';
+  public pedidoIdToDelete: number = 0;
 
+  actions: Array<PoTableAction> = [
+    { action: this.deleteProduct.bind(this), icon: 'po-icon po-icon-delete', label: 'Excluir' }
+  ];
 
   columns: Array<PoTableColumn> = [
     { property: 'id', label: 'Código', width: "120" },
@@ -39,6 +45,7 @@ export class SalesOrdersComponent {
 
   constructor( 
     private SalesOrdersService: SalesOrdersService,
+    private poNotification: PoNotificationService
   ) { }
 
   public getItems(lShowMore = false) {
@@ -56,66 +63,49 @@ export class SalesOrdersComponent {
   
     this.SalesOrdersService.get().pipe(
       take(1),
-      tap((data: any) => {
-        if (lShowMore) {
-          this.items.push(...data);
-        } else {
-          this.items = data;
+      tap({
+        next: (data: any) => {
+          if (lShowMore) {
+            this.items.push(...data);
+          } else {
+            this.items = data;
+          }
+          this.disableNext = !data.hasNext;
+        },
+        complete: () => {
+          this.loading = false;
         }
-        console.log(this.items)
-        this.disableNext = !data.hasNext;
-      }),
-      finalize(() => this.loading = false)
+      })
     ).subscribe();
   }
 
+  deleteProduct(item) {
+    this.pedidoIdToDelete = item.id;
+
+    this.modalConfirm.title = 'Exclusão de Pedido'
+    this.modalMessage = 'Deseja realmente excluir o pedido ' + item.id + '?'
+    this.modalConfirm.open();
+  }
+
+  confirmDelete() {
+    if (this.pedidoIdToDelete) {
+      this.modalConfirm.close();
   
+      this.SalesOrdersService.delete(this.pedidoIdToDelete).subscribe(
+        (response) => {
+          if (response.status === 200) {
+            this.poNotification.success('Pedido excluído com sucesso!');
+            this.getItems();
+          } else {
+            this.poNotification.error('Erro ao excluir o pedido. Código de status:' + response.status);
+          }
 
-  sumTotal(row: any) {
-    if (row.totalPrice) {
-      this.total += row.totalPrice;
+        },
+        (error) => {
+          this.poNotification.error('Erro ao chamar o serviço deletePedido:' + error);
+        }
+      );
     }
   }
 
-  decreaseTotal(row: any) {
-    if (row.totalPrice) {
-      this.total -= row.totalPrice;
-    }
-  }
-
-  sumAll() {
-    this.total = 0;
-    this.items.forEach((row) => {
-      this.sumTotal(row.totalPrice);
-    });
-  }
-
-  decreaseAll() {
-    this.total = 0;
-    this.items.forEach((row) => {
-      this.decreaseTotal(row.totalPrice);
-    });
-  }
-
-
-  discount(item) {
-    if (!item.disableDiscount) {
-      const updatedItem = { ...item, value: item.totalPrice - item.totalPrice * 0.2, disableDiscount: true };
-      this.poTable.updateItem(item, updatedItem);
-    }
-  }
-
-  private validateDiscount(item) {
-    return item.disableDiscount;
-  }
-
-  
-  details(item) {
-    this.detail = item;
-    this.poModal.open();
-  }
-
-  remove(item: { [key: string]: any }) {
-    this.poTable.removeItem(item);
-  }
 }

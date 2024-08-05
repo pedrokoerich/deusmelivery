@@ -45,7 +45,6 @@ export class AppComponent {
   }
 
   getLocalStorage(varName, varDefaultValue, jsonStringfy) {
-    // console.log(varName)
     if (localStorage.getItem(varName)) {
       if (jsonStringfy) {
         return JSON.parse(localStorage.getItem(varName))

@@ -14,23 +14,15 @@ export class DashboardComponent {
   public qtdVendasNoAno: number = 0;
   public qtdVendasNoMes: number = 0;
   public items: Array<any> = []
-  public drinksConsumption: Array<PoChartSerie> = [
-    { label: 'Brazil', data: 2796, tooltip: 'Brazil (South America)', color: 'color-10' },
-    { label: 'Vietnam', data: 1076, tooltip: 'Vietnam (Asia)' },
-    { label: 'Colombia', data: 688, tooltip: 'Colombia (South America)' },
-    { label: 'Indonesia', data: 682, tooltip: 'Indonesia (Asia/Oceania)' },
-    { label: 'Peru', data: 273, tooltip: 'Peru (South America)' }
-  ];
+  public drinksConsumption: Array<PoChartSerie> = [];
 
   public readonly columns: Array<PoTableColumn> = [
-    { property: 'STATUS', width: '10%', label: 'Status' },
-    { property: 'NAME', width: '15%', label: 'Nome', },
-    { property: 'GENRE', width: '10%', label: 'Gênero'},
-    { property: 'EMAIL', width: '15%', label: 'E-mail'},
-    { property: 'PHONE', width: '10%', label: 'Telefone' },
-    { property: 'STATE', width: '10%', label: 'Estado' },
-    { property: 'CITY', width: '10%', label: 'Cidade' },
-    { property: 'ADDRESS', width: '10%', label: 'Endereço'},
+    { property: 'name', width: '15%', label: 'Nome', },
+    { property: 'login', width: '15%', label: 'E-mail'},
+    { property: 'phone', width: '10%', label: 'Telefone' },
+    { property: 'state', width: '10%', label: 'Estado' },
+    { property: 'city', width: '10%', label: 'Cidade' },
+    { property: 'address', width: '10%', label: 'Endereço'},
     { property: 'address_number', width: '10%', label: 'Nº Endereço'}
   ];
 
@@ -43,23 +35,10 @@ export class DashboardComponent {
   ];
 
   neighborhoodConsumingChartType: PoChartType = PoChartType.Donut;
-  options: PoChartOptions = {
-    axis: {
-      minRange: 0,
-      maxRange: 40,
-      gridLines: 5
-    }
-  };
   vendasPorCategoriaDeBebidaType: PoChartType = PoChartType.Line;
-  vendasPorCategoriaDeBebida: Array<PoChartSerie> = [
-    { label: 'Brazil', data: [35, 32, 25, 29, 33, 33], color: 'color-10' },
-    { label: 'Vietnam', data: [15, 17, 23, 19, 22, 18] },
-    { label: 'Colombia', data: [8, 7, 6, 9, 10, 11] },
-    { label: 'India', data: [5, 6, 5, 4, 5, 5] },
-    { label: 'Indonesia', data: [7, 6, 10, 10, 4, 6] }
-  ];
+  vendasPorCategoriaDeBebida: Array<PoChartSerie> = [];
 
-  categories: Array<string> = ['2010', '2011', '2012', '2013', '2014', '2015'];
+  categories: Array<string> = ['03/2024', '04/2024', '05/2024', '06/2024', '07/2024', '08/2024', '09/2024', '10/2024', '11/2024', '12/2024', '01/2025', '02/2025'];
 
   constructor(
     private dashboardService: DashboardService,
@@ -69,73 +48,95 @@ export class DashboardComponent {
 
   ngOnInit():void {
     this.getTop5BebidasMaisConsumidas();
-    this.getTop5BairrosMaisConsumidores();
-    this.getVendasNosUltimos12Meses();
+    this.getTop5EstadosMaisConsumidores();
+    //this.getVendasNosUltimos12Meses();
     this.getVendasNoAno();
     this.getVendasNoMes();
     this.getTop10ClientesFieis();
   }
 
   public getTop5BebidasMaisConsumidas() {
-
     this.dashboardService.getTop5BebidasMaisConsumidas().subscribe({
-      next: (response) => {
-        console.log(response)
+      next: (response: Array<any>) => {
+        this.drinksConsumption = response.map((item) => {
+          return {
+            label: item.productName,
+            data: item.quantitySold,
+            tooltip: `${item.productName}: ${item.quantitySold} vendidos`
+          };
+        });
       },
       error: (error) => {
-        this.notification.error('Error')
+        this.notification.error(error.message);
+      }
+    });
+  }
+  
+
+  public getTop5EstadosMaisConsumidores() {
+    this.dashboardService.getTop5EstadosMaisConsumidores().subscribe({
+      next: (response: Array<any>) => {
+        this.neighborhoodConsumption = response.map((item, index) => {
+          const roundedPercentage = item.percentageSold.toFixed(2);
+          return {
+            label: item.stateSale,
+            data: parseFloat(roundedPercentage), // Garantir que o valor de dados seja um número
+            tooltip: `${item.stateSale}: ${roundedPercentage} %`
+          };
+        });
+      },
+      error: (error) => {
+        this.notification.error(error.message);
       }
     });
   }
 
-  public getTop5BairrosMaisConsumidores() {
-    this.dashboardService.getTop5BairrosMaisConsumidores().subscribe({
-      next: (response) => {
-        console.log(response)
-      },
-      error: (error) => {
-        this.notification.error('Error')
-      }
-    });
-  }
-
-  public getVendasNosUltimos12Meses() {
+  /* public getVendasNosUltimos12Meses() {
     this.dashboardService.getVendasNosUltimos12Meses().subscribe({
-      next: (response) => {
+      next: (response: Array<any>) => {
         console.log(response)
+        this.vendasPorCategoriaDeBebida = response.map((item) => {
+          return {
+            label: item.category,
+            data: item.totalSales,
+            tooltip: `${item.month}: ${item.totalSales} vendidos`
+          };
+        }
+        );
+ 
       },
       error: (error) => {
-        this.notification.error('Error')
+        this.notification.error(error.message)
       }
     });
   }
-
+ */
   public getVendasNoAno() {
     this.dashboardService.getVendasNoAno().subscribe({
-      next: (response) => {
-        console.log(response)
+      next: (response: number) => {
+        this.qtdVendasNoAno = response;
       },
       error: (error) => {
-        this.notification.error('Error')
+        this.notification.error(error.message)
       }
     });
   }
 
   public getVendasNoMes() {
     this.dashboardService.getVendasNoMes().subscribe({
-      next: (response) => {
-        console.log(response)
+      next: (response: number) => {
+        this.qtdVendasNoMes = response;
       },
       error: (error) => {
-        this.notification.error('Error')
+        this.notification.error(error.message)
       }
     });
   }
 
   public getTop10ClientesFieis() {
     this.dashboardService.getTop10ClientesFieis().subscribe({
-      next: (response) => {
-        console.log(response)
+      next: (response: Array<any>) => {
+        this.items = response;
       },
       error: (error) => {
         this.notification.error('Error')

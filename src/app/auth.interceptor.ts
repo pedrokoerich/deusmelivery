@@ -13,7 +13,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     // Verifica se a URL é relativa
     if (req.url.startsWith('api/')) {
-      console.log('Interceptando a requisição')
       let headers = req.headers;
 
       if (token) {

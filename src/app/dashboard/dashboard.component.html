@@ -12,7 +12,7 @@
     <po-widget class="po-lg-6">
         <po-chart
           class="po-lg-12 po-mt-2"
-          p-title="Top 5 bairros consumidores"
+          p-title="Top 5 Estados consumidores"
           [p-series]="neighborhoodConsumption"
           [p-type]="neighborhoodConsumingChartType"
         >
@@ -23,23 +23,22 @@
     
       <div class="po-row">
         
-        <po-chart
+<!--         <po-chart
         class="po-md-6 po-mt-2"
         p-title="Vendas nos últimos 12 meses"
-        [p-options]="options"
         [p-categories]="categories"
         [p-series]="vendasPorCategoriaDeBebida"
         [p-type]="vendasPorCategoriaDeBebidaType"
       >
-      </po-chart>
+      </po-chart> -->
     
-        <div class="po-md-6 po-mt-2">
-          <po-widget p-height="198">
+        <div class="po-md-12 po-mt-2">
+          <po-widget class="po-md-6" p-height="198">
             <div class="po-font-title po-text-center po-pt-5">{{this.qtdVendasNoAno}}</div>
             <div class="po-text-center">Quantidade de pedidos entregues no ano</div>
           </po-widget>
     
-          <po-widget p-height="198">
+          <po-widget class="po-md-6" p-height="198">
             <div class="po-font-title po-text-center po-pt-5">{{this.qtdVendasNoMes}}</div>
             <div class="po-text-center">Quantidade de pedidos entregues no mês</div>
           </po-widget>

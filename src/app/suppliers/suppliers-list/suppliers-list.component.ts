@@ -97,7 +97,6 @@ export class SuppliersListComponent {
           this.items = data;
         }
         this.disableNext = !data.hasNext;
-        console.log(this.items)
       }),
       finalize(() => this.loading = false)
     ).subscribe();
@@ -129,8 +128,8 @@ export class SuppliersListComponent {
   deleteUser(item) {
     this.supplierIdToDelete = item.id;
 
-    this.modalConfirm.title = 'Exclusão de Usuário'
-    this.modalMessage = 'Deseja realmente excluir o usuário ' + item.name + '?'
+    this.modalConfirm.title = 'Exclusão de Fornecedor'
+    this.modalMessage = 'Deseja realmente excluir o fornecedor ' + item.name + '?'
     this.modalConfirm.open();
   }
 
@@ -140,15 +139,14 @@ export class SuppliersListComponent {
   
       this.suppliersService.deleteSupplier(this.supplierIdToDelete).subscribe(
         (response) => {
-          console.log(response);
           if (response.status === 200) {
-            this.poNotification.success('Usuário excluído com sucesso!');
+            this.poNotification.success('Fornecedor excluído com sucesso!');
           } else {
-            this.poNotification.error('Erro ao excluir usuário. Código de status:' + response.status);
+            this.poNotification.error('Erro ao excluir fornecedor. Código de status:' + response.status);
           }
         },
         (error) => {
-          this.poNotification.error('Erro ao chamar o serviço deleteUser:' + error);
+          this.poNotification.error('Erro ao chamar o serviço deleteSupplier:' + error);
         }
       );
     }

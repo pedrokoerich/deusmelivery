@@ -25,8 +25,6 @@ export class SuppliersService {
   }
 
   public getCombo(filter: String) {
-    console.log('filter', filter)
-    console.log(this.serviceApi+'/combo?filter='+filter)
     return this.http.get(this.serviceApi+'/combo?filter='+filter, { headers: this.headers });
   }
 

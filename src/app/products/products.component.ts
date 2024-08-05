@@ -47,7 +47,7 @@ export class ProductsComponent {
 
 
   goToProducts(param) {
-    this.router.navigate(['/products/list/'+param]);
+    this.router.navigate(['/products/list/'+param+'']);
   }
 
 }

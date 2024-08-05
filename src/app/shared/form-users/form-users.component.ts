@@ -59,7 +59,6 @@ export class FormUsersComponent {
       };
       this.enablePasswordAndCpf();
     }
-    console.log(this.routeActive.snapshot.paramMap.get('id'))
     this.userId = this.routeActive.snapshot.paramMap.get('id');
     if (this.userId) {
       // Se o ID existe na URL, chame a função para carregar o usuário
@@ -111,7 +110,6 @@ export class FormUsersComponent {
   }
 
   public saveUser(): void {
-    console.log(this.person);
     this.UsersService.saveUser(this.person).subscribe(
       (response) => {
         if (response.status === 200) {
@@ -131,7 +129,6 @@ export class FormUsersComponent {
     this.UsersService.getUserById(userId).pipe(
       take(1),
       tap((data: any) => {
-        console.log(data)
         this.person = data;
       }),
       finalize(() => this.loading = false)

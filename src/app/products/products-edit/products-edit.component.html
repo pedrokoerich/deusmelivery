@@ -29,14 +29,15 @@
             p-placeholder="Digite o nome do fornecedor com no mínimo 3 letras"
             p-field-label="label" 
             p-field-value="value" 
+            [p-disabled-init-filter]="false"
             [p-disabled]="VISUALIZAR"
             [p-filter-service]="SuppliersService" 
-            p-emit-object-value="true">
+            [p-emit-object-value]="true">
             <ng-template p-combo-option-template let-option>
                 <div class="po-row">
                   <div class="po-sm-12 po-md-12 po-lg-12">
                     <div class="po-font-text-large-bold">{{ option.label }}</div>
-                    <div class="po-font-text-smaller">{{ option.value }}</div>
+                    <div class="po-font-text-smaller">Código: {{ option.value }}</div>
                   </div>
                 </div>
               </ng-template>

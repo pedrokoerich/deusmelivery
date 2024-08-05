@@ -30,7 +30,6 @@ export class UsersService {
 
 
   public saveUser(user: any): Observable<HttpResponse<any>> { 
-    console.log(user)
     if (user.id) {
       return this.http.put(`${this.serviceApi}/${user.id}`, user, { observe: 'response', headers: this.headers});
     } else {

@@ -23,8 +23,8 @@ export class DashboardService {
     return this.http.get(`${this.serviceApi}/Top5BebidasMaisConsumidas`, { headers: this.headers })
   }
 
-  public getTop5BairrosMaisConsumidores() {
-    return this.http.get(`${this.serviceApi}/Top5BairrosMaisConsumidores`, { headers: this.headers })
+  public getTop5EstadosMaisConsumidores() {
+    return this.http.get(`${this.serviceApi}/Top5EstadosMaisConsumidores`, { headers: this.headers })
   }
 
   public getVendasNosUltimos12Meses() {

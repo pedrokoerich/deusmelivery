@@ -101,7 +101,6 @@ export class SuppliersEditComponent {
   }
 
   public saveSupplier(): void {
-    console.log(this.supplierId);
     this.supplierService.saveSupplier(this.supplier).subscribe(
       (response) => {
         if (response.status === 200) {
@@ -121,7 +120,6 @@ export class SuppliersEditComponent {
     this.supplierService.getUserById(supplierId).pipe(
       take(1),
       tap((data: any) => {
-        console.log(data)
         this.supplier = data;
       }),
       finalize(() => this.loading = false)

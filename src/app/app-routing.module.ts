@@ -11,13 +11,13 @@ import { UserPasswordChangeComponent } from './user-password-change/user-passwor
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-    /* canActivate: [LoginService]  */
+    component: DashboardComponent,
+    canActivate: [LoginService] 
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    /* canActivate: [LoginService]  */
+    canActivate: [LoginService] 
   },
   {
     path: 'login',
@@ -31,27 +31,27 @@ const routes: Routes = [
   { 
     path: 'products', 
     loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
-    /* canActivate: [LoginService]  */
+    canActivate: [LoginService] 
   },
   { 
     path: 'sales-orders', 
     component: SalesOrdersComponent, 
-   /*  canActivate: [LoginService] , */
+    canActivate: [LoginService] ,
   },
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
-    /* canActivate: [LoginService] */ 
+    canActivate: [LoginService] 
   },
   {
     path: 'suppliers',
     loadChildren: () => import('./suppliers/suppliers.module').then(m => m.SuppliersModule),
-    /* canActivate: [LoginService] */ 
+    canActivate: [LoginService] 
   },
   {
     path: 'user-password-change',
     component: UserPasswordChangeComponent,
-    /* canActivate: [LoginService] */
+    canActivate: [LoginService]
   },
   { 
     path: '**', 

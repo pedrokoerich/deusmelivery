@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -21,5 +21,9 @@ export class SalesOrdersService {
 
   public get(): Observable<any> {
     return this.http.get(this.serviceApi, { headers: this.headers });
+  }
+
+  public delete(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete(`${this.serviceApi}/${id}`, { observe: 'response' });
   }
 }

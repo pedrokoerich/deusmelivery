@@ -4,25 +4,22 @@
   [p-height]="400"
   [p-hide-batch-actions]="false"
   [p-hide-table-search]="false"
-  [p-selectable]="true"
   [p-sort]="true"
+  [p-actions-right]="true"
+  [p-actions]="actions"
   [p-striped]="true"
   [p-columns]="columns"
   [p-items]="items || []"
-  (p-selected)="sumTotal($event)"
-  (p-unselected)="decreaseTotal($event)"
-  (p-all-selected)="sumAll()"
-  (p-all-unselected)="decreaseAll()"
 >
 </po-table>
 
-<po-divider></po-divider>
-
-<po-info
-  class="po-md-6 po-mb-sm-2 po-mb-md-2 po-lb-lg-2"
-  p-label="Total"
-  p-orientation="horizontal"
-  p-value="{{ total | currency: 'BRL' }}"
->
-</po-info>
+<po-modal #modalConfirm p-title="" p-size="sm">
+  <div class="po-modal-body">
+    {{ modalMessage }}
+  </div>
+  <po-modal-footer>
+    <po-button p-label="Cancelar" (p-click)="modalConfirm?.close()"> </po-button>
+    <po-button p-label="Confirmar" p-kind="primary" (p-click)="confirmDelete()"> </po-button>
+  </po-modal-footer>
+</po-modal>
 </po-page-default>

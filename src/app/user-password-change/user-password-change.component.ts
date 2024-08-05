@@ -19,34 +19,9 @@ export class UserPasswordChangeComponent implements OnInit {
               private thfNotification: PoNotificationService,
               ) { }
 
-  public requirements: Array<PoPageChangePasswordRequirement> = [
-    {
-      requirement: 'Mínimo 8 caracteres',
-      status: () => this.checkRequirementPassword(this.changePassword.newPassword, '(?=.{8})')
-    },
-    {
-      requirement: 'Mínimo 1 caractere alfabético minúsculo',
-      status: () => this.checkRequirementPassword(this.changePassword.newPassword, '(?=.*[a-z])')
-    },
-    {
-      requirement: 'Mínimo 1 caractere alfabético maiúsculo',
-      status: () => this.checkRequirementPassword(this.changePassword.newPassword, '(?=.*[A-Z])')
-    }, {
-      requirement: 'Mínimo 1 caractere numérico',
-      status: () => this.checkRequirementPassword(this.changePassword.newPassword, '(?=.*[0-9])')
-    }
-  ];
-
   ngOnInit() {
   }
 
-  checkRequirementPassword(value, valueregex) {
-    let regex = new RegExp(valueregex);
-    if (value !== undefined && regex.test(value)) {
-      return true;
-    }
-    return false;
-  }
   alterarSenha(data) {
     this.userPasswordChangeService.get(data).pipe(take(1)).subscribe(
       (data: Array<object>) => {

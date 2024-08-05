@@ -20,8 +20,8 @@ export class ProductsEditComponent {
   public form: any = this.createReactiveForm();
   public breadcrumb: PoBreadcrumb = {
     items: [
-      { label: 'Produtos', action: () => this.router.navigate(['products/list']) },
-      { label: '',  },
+      { label: 'Produtos', action: () => this.router.navigate(['products']) },
+      { label: '' }
     ]
   };
 
@@ -44,6 +44,7 @@ export class ProductsEditComponent {
   public title: string = '';
   public VISUALIZAR: boolean = false;
   public userId: string = '';
+  public category: string = '';
 
   loading: boolean = false;
 
@@ -86,7 +87,7 @@ export class ProductsEditComponent {
         }
       }
     );
-    this.router.navigate(['/products/list']);
+    this.router.navigate(['/products']);
   }
 
 
@@ -102,7 +103,8 @@ export class ProductsEditComponent {
           fornec: data.fornec,
           productValue: data.productValue
         });
-
+        
+        this.form.get('fornec').setValue(data.fornec);
       }),
       finalize(() => this.loading = false)
     ).subscribe();
@@ -114,7 +116,7 @@ export class ProductsEditComponent {
       category: [''],
       quantity: [0],
       productValue: [0],
-      fornec: ['']
+      fornec: [0]
     };
     const formGroup = this.fb.group(formGroupConfig);
     return formGroup;
@@ -122,11 +124,9 @@ export class ProductsEditComponent {
 
   public getSuppliersCombo(dado: any) {
     this.suppliers.length = 0;
-    console.log('dado', dado);
     if (dado) {
       this.SuppliersService.getCombo(dado).pipe(take(1)).subscribe(
         (data: any) => {
-          console.log('data', data.items)
           this.suppliers = data.items;
         }
       );

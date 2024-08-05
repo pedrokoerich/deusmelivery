@@ -104,7 +104,6 @@ export class UsersListComponent {
         this.items = mappedData;
       }
         this.disableNext = !data.hasNext;
-        console.log(this.items)
       }),
       finalize(() => this.loading = false)
     ).subscribe();
@@ -147,7 +146,6 @@ export class UsersListComponent {
   
       this.usersService.deleteUser(this.userIdToDelete).subscribe(
         (response) => {
-          console.log(response);
           if (response.status === 200) {
             this.poNotification.success('Usuário excluído com sucesso!');
           } else {

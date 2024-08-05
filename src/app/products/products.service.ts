@@ -28,7 +28,6 @@ export class ProductsService {
 
 
   public get(filters: any = {}): Observable<any> {
-    console.log('filters', filters)
     return this.http.get<any>(`${this.serviceApi}`, { params: filters });
   }
 
@@ -36,7 +35,6 @@ export class ProductsService {
     if (product.id) {
       return this.http.put(`${this.serviceApi}/${product.id}`, product, { observe: 'response' });
     } else {
-      console.log('product', product)
       return this.http.post(this.serviceApi, product, { observe: 'response' });
     }
   }
@@ -45,7 +43,7 @@ export class ProductsService {
     return this.http.delete(`${this.serviceApi}/${id}`, { observe: 'response' });
   }
 
-  getProductById(id: string): Observable<any> {
+  public getProductById(id: string): Observable<any> {
     return this.http.get(`${this.serviceApi}/${id}`, { headers: this.headers });
   }
 }
